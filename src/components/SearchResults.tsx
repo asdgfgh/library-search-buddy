@@ -35,7 +35,7 @@ const SearchResults = ({ results, isVisible, searchQuery }: SearchResultsProps) 
             <div 
               key={book.id} 
               className="animate-fade-in" 
-              style={{ animationDelay: `${index * 0.05}s` }}
+              style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
             >
               <BookCard book={book} />
             </div>
