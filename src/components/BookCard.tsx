@@ -8,6 +8,11 @@ interface BookCardProps {
 
 const BookCard = ({ book }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <div 
@@ -38,9 +43,19 @@ const BookCard = ({ book }: BookCardProps) => {
       </div>
       <div className="p-4">
         <div className="text-xs text-primary font-medium mb-1">{book.genre}</div>
-        <h3 className="font-medium text-lg line-clamp-1">{book.title}</h3>
+        <h3 className="font-medium text-lg">{book.title}</h3>
         <p className="text-sm text-muted-foreground mb-2">{book.author}, {book.year}</p>
-        <p className="text-sm line-clamp-2 text-muted-foreground">{book.description}</p>
+        <p className={`text-sm text-muted-foreground ${isExpanded ? '' : 'line-clamp-2'}`}>
+          {book.description}
+        </p>
+        {book.description && book.description.length > 100 && (
+          <button 
+            onClick={toggleExpand} 
+            className="text-xs text-primary mt-2 hover:underline"
+          >
+            {isExpanded ? 'Згорнути' : 'Розгорнути'}
+          </button>
+        )}
       </div>
     </div>
   );

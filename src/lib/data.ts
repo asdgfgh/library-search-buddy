@@ -1,4 +1,3 @@
-
 export interface Book {
   id: string;
   title: string;
@@ -206,7 +205,7 @@ export const books: Book[] = [
     author: "Г.А. Ларош",
     year: 1953,
     genre: "Музикознавство",
-    description: "Москва, Гос. муз. изд-во, 197с., М Л25",
+    description: "Москва, Гос.муз.изд-во, 197с., М Л25",
     available: true
   },
   {
@@ -242,7 +241,7 @@ export const books: Book[] = [
     author: "Н. Шафер",
     year: 1988,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 183с., М Ш-30",
+    description: "Москва, Советский ��омпозитор, 183с., М Ш-30",
     available: true
   },
   {
@@ -467,7 +466,7 @@ export const books: Book[] = [
     author: "Н. Ризоль",
     year: 1986,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 224 с., М Р49",
+    description: "Москв��, Советский композитор, 224 с., М Р49",
     available: true
   },
   {
@@ -643,7 +642,6 @@ export const books: Book[] = [
   }
 ];
 
-// Continue the books array with the remaining books
 export const moreBooks: Book[] = [
   {
     id: "71",
@@ -809,7 +807,7 @@ export const moreBooks: Book[] = [
   },
   {
     id: "89",
-    title: "Александр Данилович Каменский. Очерк жизни и творчества",
+    title: "Александр Данилович Каменс��ий. Очерк жизни и творчества",
     author: "А. Бушен",
     year: 1982,
     genre: "Біографія",
@@ -917,18 +915,17 @@ export const moreBooks: Book[] = [
   }
 ];
 
-// Combined books array
 export const allBooks = [...books, ...moreBooks];
 
 export const filterBooks = (query: string): Book[] => {
   if (!query) return [];
   
-  const lowercaseQuery = query.toLowerCase();
+  const lowercaseQuery = query.toLowerCase().trim();
   return allBooks.filter(book => 
     book.title.toLowerCase().includes(lowercaseQuery) || 
     book.author.toLowerCase().includes(lowercaseQuery) || 
     book.genre.toLowerCase().includes(lowercaseQuery) || 
-    book.description.toLowerCase().includes(lowercaseQuery)
+    book.description.toLowerCase().includes(lowercaseQuery) ||
+    String(book.year).includes(lowercaseQuery)
   );
 };
-
