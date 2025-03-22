@@ -1,6 +1,5 @@
 
 import { Book } from '@/lib/data';
-import BookCard from './BookCard';
 import { useDelayedMount } from '@/lib/animations';
 
 interface SearchResultsProps {
@@ -30,14 +29,29 @@ const SearchResults = ({ results, isVisible, searchQuery }: SearchResultsProps) 
       </div>
       
       {results.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="flex flex-col space-y-2">
           {results.map((book, index) => (
             <div 
               key={book.id} 
-              className="animate-fade-in" 
+              className="animate-fade-in p-3 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
               style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
             >
-              <BookCard book={book} />
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-medium">{book.title}</h3>
+                    <span className={`text-xs px-2 py-1 rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      {book.available ? 'Доступно' : 'Видано'}
+                    </span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {book.author}, {book.year} • {book.genre}
+                  </div>
+                  <div className="text-sm text-muted-foreground mt-1">
+                    {book.description}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
