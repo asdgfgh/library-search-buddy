@@ -1,3 +1,4 @@
+
 export interface Book {
   id: string;
   title: string;
@@ -25,7 +26,7 @@ export const books: Book[] = [
     author: "Збірник",
     year: 1988,
     genre: "Збірка",
-    description: "Москва, Книга, 256 с., 5-21200028-9",
+    description: "Москва, Книга, 256 с., 5-212-00028-9",
     available: true
   },
   {
@@ -34,7 +35,7 @@ export const books: Book[] = [
     author: "Ромен Роллан",
     year: 1990,
     genre: "Музикознавство",
-    description: "Жизнь Бетховена. Бетховен. Великие творческие эпохи. От \"Героической\" до \"Аппассионаты\". Москва, Музыка, 285 с.",
+    description: "Жизнь Бетховена. Бетховен. Великие творческие эпохи. От \"Героической\" до \"Аппассионаты\". Москва, Музыка, 285 с., 5-7140-0296-2",
     available: true
   },
   {
@@ -43,7 +44,7 @@ export const books: Book[] = [
     author: "А. Николаев",
     year: 1949,
     genre: "Музикознавство",
-    description: "Москва, Ленинград, Гос. Муз. изд-во, 207 с., M-Ц Н63",
+    description: "Москва, Ленинград, Гос. Муз. изд-во, 207 с.",
     available: true
   },
   {
@@ -52,7 +53,7 @@ export const books: Book[] = [
     author: "Е. Орлова",
     year: 1948,
     genre: "Музикознавство",
-    description: "Москва, Ленинград, ГОС. МУЗ. ИЗД-ВО, 163с., М О-66",
+    description: "Москва, Ленинград, ГОС. МУЗ. ИЗД-ВО, 163с.",
     available: true
   },
   {
@@ -61,7 +62,7 @@ export const books: Book[] = [
     author: "Л. Кауфман",
     year: 1962,
     genre: "Біографія",
-    description: "Київ, Держ.вид-во Образотворчого мистецтва і музичної літератури УРСР, 192с., М К-30",
+    description: "Київ, Держ.вид-во Образотворчого мистецтва і музичної літератури УРСР, 192с.",
     available: true
   },
   {
@@ -70,7 +71,7 @@ export const books: Book[] = [
     author: "Т. Швачко",
     year: 1986,
     genre: "Біографія",
-    description: "Киев, Музична Украина, 136с., М Ш-33",
+    description: "Киев, Музична Украина, 136с.",
     available: true
   },
   {
@@ -79,7 +80,7 @@ export const books: Book[] = [
     author: "С. Хентова",
     year: 1988,
     genre: "Музикознавство",
-    description: "Москва, Музыка, 32с., М Х-38, 5-7140-0189-3",
+    description: "Москва, Музыка, 32с., 5-7140-0189-3",
     available: true
   },
   {
@@ -88,7 +89,7 @@ export const books: Book[] = [
     author: "М. Друскин",
     year: 1959,
     genre: "Довідник",
-    description: "Ленинград, Советсикй композитор, 328с., М П99",
+    description: "Ленинград, Советсикй композитор, 328с.",
     available: true
   },
   {
@@ -97,7 +98,7 @@ export const books: Book[] = [
     author: "Збірник",
     year: 1971,
     genre: "Музикознавство",
-    description: "Москва, Изд-во Музыка, 420с., М О-60",
+    description: "Москва, Изд-во Музыка, 420с.",
     available: false
   },
   {
@@ -106,7 +107,7 @@ export const books: Book[] = [
     author: "Вяч. Пасхалов",
     year: 1951,
     genre: "Біографія",
-    description: "Ленингшрад-Москва, Гос. муз. изд-во, М П19",
+    description: "Ленингшрад-Москва, Гос. муз. изд-во",
     available: true
   },
   {
@@ -115,7 +116,7 @@ export const books: Book[] = [
     author: "С. Танеев",
     year: 1985,
     genre: "Щоденники",
-    description: "Москва, Музыка, 560с., М Т18",
+    description: "Москва, Музыка, 560с.",
     available: true
   },
   {
@@ -124,7 +125,7 @@ export const books: Book[] = [
     author: "Т. Ливанова",
     year: 1953,
     genre: "Біографія",
-    description: "Москва, Гос. муз. изд-во, 407с., М Л55",
+    description: "Москва, Гос. муз. изд-во, 407с.",
     available: false
   },
   {
@@ -151,7 +152,7 @@ export const books: Book[] = [
     author: "Ц.А. Кюи",
     year: 1952,
     genre: "Збірка статей",
-    description: "Ленинград, Гос.муз.изд-во, 691с., М К99",
+    description: "Ленинград, Гос.муз.изд-во, 691с.",
     available: true
   },
   {
@@ -160,7 +161,7 @@ export const books: Book[] = [
     author: "Н. Запорожец",
     year: 1954,
     genre: "Біографія",
-    description: "Москва, Гос.муз.изд-во, 213с., М З-30",
+    description: "Москва, Гос.муз.изд-во, 213с.",
     available: true
   },
   {
@@ -169,7 +170,7 @@ export const books: Book[] = [
     author: "Г. Пожидаев",
     year: 1984,
     genre: "Біографія",
-    description: "Киев, Музична Украина, 88с., М П46",
+    description: "Киев, Музична Украина, 88с.",
     available: true
   },
   {
@@ -178,7 +179,7 @@ export const books: Book[] = [
     author: "Дм.Кабалевский",
     year: 1984,
     genre: "Педагогіка",
-    description: "Москва, Просвещение, 206с., М К12",
+    description: "Москва, Просвещение, 206с.",
     available: false
   },
   {
@@ -187,7 +188,7 @@ export const books: Book[] = [
     author: "Е. Канн-Новикова",
     year: 1955,
     genre: "Документи",
-    description: "Москва, Гос. муз. изд-во, 218с., М К19",
+    description: "Москва, Гос. муз. изд-во, 218с.",
     available: true
   },
   {
@@ -196,7 +197,7 @@ export const books: Book[] = [
     author: "М.И. Глинка",
     year: 1954,
     genre: "Музикознавство",
-    description: "Москва, Гос.муз.изд-во, 86с., М Г54",
+    description: "Москва, Гос.муз.изд-во, 86с.",
     available: true
   },
   {
@@ -205,7 +206,7 @@ export const books: Book[] = [
     author: "Г.А. Ларош",
     year: 1953,
     genre: "Музикознавство",
-    description: "Москва, Гос.муз.изд-во, 197с., М Л25",
+    description: "Москва, Гос.муз.изд-во, 197с.",
     available: true
   },
   {
@@ -214,7 +215,7 @@ export const books: Book[] = [
     author: "И.Ремезов",
     year: 1954,
     genre: "Біографія",
-    description: "Москва, Гос.муз.изд-во, 70с., М Р-37",
+    description: "Москва, Гос.муз.изд-во, 70с.",
     available: true
   },
   {
@@ -223,7 +224,7 @@ export const books: Book[] = [
     author: "В.Ф. Одоевский",
     year: 1953,
     genre: "Музикознавство",
-    description: "Москва, Гос.муз.изд-во, 98с., М О-44",
+    description: "Москва, Гос.муз.изд-во, 98с.",
     available: true
   },
   {
@@ -232,7 +233,7 @@ export const books: Book[] = [
     author: "М. Пекелис",
     year: 1951,
     genre: "Музикознавство",
-    description: "Москва-Ленинград, Гос.муз.изд-во, 210с., М П24",
+    description: "Москва-Ленинград, Гос.муз.изд-во, 210с.",
     available: true
   },
   {
@@ -241,7 +242,7 @@ export const books: Book[] = [
     author: "Н. Шафер",
     year: 1988,
     genre: "Музикознавство",
-    description: "Москв��, Советский ��омпозитор, 183с., М Ш-30",
+    description: "Москва, Советский композитор, 183с.",
     available: true
   },
   {
@@ -250,7 +251,7 @@ export const books: Book[] = [
     author: "Фридрих Вильгельм Йозеф Шеллинг",
     year: 1987,
     genre: "Філософія",
-    description: "Москва, Мысль, 637с., М П24",
+    description: "Москва, Мысль, 637с.",
     available: true
   },
   {
@@ -259,7 +260,7 @@ export const books: Book[] = [
     author: "С. Хентова",
     year: 1986,
     genre: "Біографія",
-    description: "Ленинград, Советский композитор, 623с., М Х38",
+    description: "Ленинград, Советский композитор, 623с.",
     available: true
   },
   {
@@ -268,7 +269,7 @@ export const books: Book[] = [
     author: "С. Хентова",
     year: 1985,
     genre: "Біографія",
-    description: "Ленинград, Советский композитор, 543с., М Х38",
+    description: "Ленинград, Советский композитор, 543с.",
     available: true
   },
   {
@@ -277,7 +278,7 @@ export const books: Book[] = [
     author: "Л. Архімович, Т. Каришева, Т. Шеффер, О. Шреєр-Ткаченко",
     year: 1964,
     genre: "Історія музики",
-    description: "Київ, Мистецтво, 309 с., М Н28",
+    description: "Київ, Мистецтво, 309 с.",
     available: true
   },
   {
@@ -286,7 +287,7 @@ export const books: Book[] = [
     author: "А.Д. Алексеев",
     year: 1952,
     genre: "Музикознавство",
-    description: "Москва-Ленинград, Гос.муз.изд-во, 252 с., М А47",
+    description: "Москва-Ленинград, Гос.муз.изд-во, 252 с.",
     available: true
   },
   {
@@ -295,7 +296,7 @@ export const books: Book[] = [
     author: "Леонид Энтелис",
     year: 1974,
     genre: "Музикознавство",
-    description: "Ленинград, Советский композитор, 184 с., М Э67",
+    description: "Ленинград, Советский композитор, 184 с.",
     available: true
   },
   {
@@ -304,7 +305,7 @@ export const books: Book[] = [
     author: "В. Конен",
     year: 1984,
     genre: "Музикознавство",
-    description: "Москва, Всесоюзное изд-во Советский композитор, 312 с., М К64",
+    description: "Москва, Всесоюзное изд-во Советский композитор, 312 с.",
     available: true
   },
   {
@@ -313,7 +314,7 @@ export const books: Book[] = [
     author: "Д.Юэн",
     year: 1989,
     genre: "Біографія",
-    description: "Москва, Музыка, 287 с., М Ю99",
+    description: "Москва, Музыка, 287 с., 5-7140-0115-Х",
     available: true
   },
   {
@@ -322,7 +323,7 @@ export const books: Book[] = [
     author: "Й. Волинський",
     year: 1965,
     genre: "Біографія",
-    description: "Київ, Мистецтво, 75 с., М В70",
+    description: "Київ, Мистецтво, 75 с.",
     available: true
   },
   {
@@ -331,7 +332,7 @@ export const books: Book[] = [
     author: "М. Михайлов",
     year: 1964,
     genre: "Біографія",
-    description: "Київ, Мистецтво, 80 с., М М69",
+    description: "Київ, Мистецтво, 80 с.",
     available: true
   },
   {
@@ -340,7 +341,7 @@ export const books: Book[] = [
     author: "Ф. Шопен",
     year: 1984,
     genre: "Листування",
-    description: "Москва, Музыка, 461 с., М Ш79",
+    description: "Москва, Музыка, 461 с.",
     available: true
   },
   {
@@ -349,7 +350,7 @@ export const books: Book[] = [
     author: "Франсуа Куперен",
     year: 1973,
     genre: "Музикознавство",
-    description: "Москва, Музыка, 152 с., М К92",
+    description: "Москва, Музыка, 152 с.",
     available: true
   },
   {
@@ -358,7 +359,7 @@ export const books: Book[] = [
     author: "Л. Мазель",
     year: 1991,
     genre: "Музикознавство",
-    description: "Москва, Музыка, 80 с., М М13",
+    description: "Москва, Музыка, 80 с., 5-7140-0366-7",
     available: true
   },
   {
@@ -367,7 +368,7 @@ export const books: Book[] = [
     author: "А. Онеггер",
     year: 1985,
     genre: "Музикознавство",
-    description: "Ленинград, Музыка, 216 с., М О-58",
+    description: "Ленинград, Музыка, 216 с.",
     available: true
   },
   {
@@ -376,7 +377,7 @@ export const books: Book[] = [
     author: "М. Друскин",
     year: 1973,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 270 с., М Д76",
+    description: "Москва, Советский композитор, 270 с.",
     available: true
   },
   {
@@ -385,7 +386,7 @@ export const books: Book[] = [
     author: "Маргерит Лонг",
     year: 1985,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 157 с., М Л76",
+    description: "Москва, Советский композитор, 157 с.",
     available: true
   },
   {
@@ -394,7 +395,7 @@ export const books: Book[] = [
     author: "Ф. Верфель",
     year: 1991,
     genre: "Література",
-    description: "Москва, Музыка, 319 с., М В67",
+    description: "Москва, Музыка, 319 с., 5-7140-0313-6",
     available: true
   },
   {
@@ -403,7 +404,7 @@ export const books: Book[] = [
     author: "Г.А.Орлов",
     year: 1954,
     genre: "Музикознавство",
-    description: "Ленинград, Гос.муз.изд-во, 210 с., М О-66",
+    description: "Ленинград, Гос.муз.изд-во, 210 с.",
     available: true
   },
   {
@@ -412,7 +413,7 @@ export const books: Book[] = [
     author: "Б.Яворский",
     year: 1972,
     genre: "Збірка",
-    description: "Москва, Советский композитор, 711 с., М Я22",
+    description: "Москва, Советский композитор, 711 с.",
     available: true
   },
   {
@@ -421,7 +422,7 @@ export const books: Book[] = [
     author: "Л. Григорьев, Я. Платек",
     year: 1985,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 472 с., М Г83",
+    description: "Москва, Советский композитор, 472 с.",
     available: true
   },
   {
@@ -448,7 +449,7 @@ export const books: Book[] = [
     author: "Т. Ливанова",
     year: 1952,
     genre: "Музикознавство",
-    description: "Москва, Глс. муз. изд-во, 535 с., М Л55",
+    description: "Москва, Глс. муз. изд-во, 535 с.",
     available: true
   },
   {
@@ -457,7 +458,7 @@ export const books: Book[] = [
     author: "Бенце Сабольчи",
     year: 1959,
     genre: "Біографія",
-    description: "Будапешт, Изд-во Академии наук Венгрии, 139 с., М С12",
+    description: "Будапешт, Изд-во Академии наук Венгрии, 139 с.",
     available: true
   },
   {
@@ -466,7 +467,7 @@ export const books: Book[] = [
     author: "Н. Ризоль",
     year: 1986,
     genre: "Музикознавство",
-    description: "Москв��, Советский композитор, 224 с., М Р49",
+    description: "Москва, Советский композитор, 224 с.",
     available: true
   },
   {
@@ -484,7 +485,7 @@ export const books: Book[] = [
     author: "Я. Платек",
     year: 1989,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 350 с., М П37",
+    description: "Москва, Советский композитор, 350 с.",
     available: true
   },
   {
@@ -493,7 +494,7 @@ export const books: Book[] = [
     author: "М. Нюрнберг",
     year: 1950,
     genre: "Музикознавство",
-    description: "Ленинград-Москва, Гос.муз.изд-во, 151 с., М-Ц Н97",
+    description: "Ленинград-Москва, Гос.муз.изд-во, 151 с.",
     available: true
   },
   {
@@ -502,7 +503,7 @@ export const books: Book[] = [
     author: "Борис Медовой",
     year: 1991,
     genre: "Біографія",
-    description: "Москва, Изд-во политической лит-ры, 331с.",
+    description: "Москва, Изд-во политической лит-ры, 331с., 5-250-01179-9",
     available: true
   },
   {
@@ -511,7 +512,7 @@ export const books: Book[] = [
     author: "А.Н. Сенкевич",
     year: 1989,
     genre: "Культурологія",
-    description: "Москва, Наука, 229 с.",
+    description: "Москва, Наука, 229 с., 5-02-016662-6",
     available: true
   },
   {
@@ -520,7 +521,7 @@ export const books: Book[] = [
     author: "Б. Незванов",
     year: 1985,
     genre: "Музикознавство",
-    description: "Ленинград, Музыка, 184с., М Н44",
+    description: "Ленинград, Музыка, 184с.",
     available: true
   },
   {
@@ -529,7 +530,7 @@ export const books: Book[] = [
     author: "Н. Спектор",
     year: 1991,
     genre: "Музикознавство",
-    description: "Москва, Музыка, 78 с., М С71",
+    description: "Москва, Музыка, 78 с., 5-7140-0367-5",
     available: true
   },
   {
@@ -547,7 +548,7 @@ export const books: Book[] = [
     author: "Ал. Алтаев",
     year: 1955,
     genre: "Біографія",
-    description: "Гос. изд-во Детской литературы Министерства просвещения РСФСР, 335с., М А52",
+    description: "Гос. изд-во Детской литературы Министерства просвещения РСФСР, 335с.",
     available: true
   },
   {
@@ -556,7 +557,7 @@ export const books: Book[] = [
     author: "А.С.Рабинович",
     year: 1948,
     genre: "Музикознавство",
-    description: "Музгиз, 269с., М-Ц Р12",
+    description: "Музгиз, 269с.",
     available: true
   },
   {
@@ -565,7 +566,7 @@ export const books: Book[] = [
     author: "Б.И. Загурский",
     year: 1948,
     genre: "Біографія",
-    description: "Ленинград-Москва, 175с., М-Ц З-14",
+    description: "Ленинград-Москва, 175с.",
     available: true
   },
   {
@@ -574,7 +575,7 @@ export const books: Book[] = [
     author: "В.С. Соловьев",
     year: 1991,
     genre: "Філософія",
-    description: "Москва, Искусство, 701с.",
+    description: "Москва, Искусство, 701с., 5--210--02462--8",
     available: true
   },
   {
@@ -583,7 +584,7 @@ export const books: Book[] = [
     author: "В.И. Музалевский",
     year: 1949,
     genre: "Музикознавство",
-    description: "Ленинград-Москва, Гос.муз.изд-во, 360с., М-Ц М89",
+    description: "Ленинград-Москва, Гос.муз.изд-во, 360с.",
     available: true
   },
   {
@@ -592,7 +593,7 @@ export const books: Book[] = [
     author: "Збірник",
     year: 1956,
     genre: "Історія музики",
-    description: "Ленинград-Москва, Гос.муз.изд-во, 457с., М О-95",
+    description: "Ленинград-Москва, Гос.муз.изд-во, 457с.",
     available: true
   },
   {
@@ -601,7 +602,7 @@ export const books: Book[] = [
     author: "Георг Вильгельм Фридрих Гегель",
     year: 1990,
     genre: "Філософія",
-    description: "Москва, Мысль, 526 с.",
+    description: "Москва, Мысль, 526 с., 5-244-00384-4",
     available: true
   },
   {
@@ -610,7 +611,7 @@ export const books: Book[] = [
     author: "Друскин",
     year: 1989,
     genre: "Філософія",
-    description: "Москва, Мысль, 638с.",
+    description: "Москва, Мысль, 638с., 5-244-00357-7",
     available: true
   },
   {
@@ -628,7 +629,7 @@ export const books: Book[] = [
     author: "Збірник",
     year: 1987,
     genre: "Музикознавство",
-    description: "Москва, Музыка, 93с., М С42",
+    description: "Москва, Музыка, 93с.",
     available: true
   },
   {
@@ -637,12 +638,9 @@ export const books: Book[] = [
     author: "Ф. Шаляпин",
     year: 1990,
     genre: "Біографія",
-    description: "Ленинград, Музыка, 352с., М Ш18",
+    description: "Ленинград, Музыка, 352с., 5-7140-0278-4",
     available: true
-  }
-];
-
-export const moreBooks: Book[] = [
+  },
   {
     id: "71",
     title: "Созвездие лиры. Избранные страницы латиноамериканской лирики",
@@ -658,7 +656,7 @@ export const moreBooks: Book[] = [
     author: "В.В. Стасов",
     year: 1954,
     genre: "Музикознавство",
-    description: "Москва, Гос.муз.изд-во, 162с., М С77",
+    description: "Москва, Гос.муз.изд-во, 162с.",
     available: true
   },
   {
@@ -667,7 +665,7 @@ export const moreBooks: Book[] = [
     author: "М.Крохмаль-Орябінська, Л. Архимович",
     year: 1953,
     genre: "Біографія",
-    description: "Київ, Мистецтво, 48с., М К83",
+    description: "Київ, Мистецтво, 48с.",
     available: true
   },
   {
@@ -676,7 +674,7 @@ export const moreBooks: Book[] = [
     author: "О.М. Томпакова",
     year: 1991,
     genre: "Біографія",
-    description: "Москва, Музыка, 111с., М Т56",
+    description: "Москва, Музыка, 111с., 5-7140-0283-0",
     available: true
   },
   {
@@ -685,7 +683,7 @@ export const moreBooks: Book[] = [
     author: "М. Билинская",
     year: 1984,
     genre: "Музикознавство",
-    description: "Киев, Музична Україна, 129с., М Б61",
+    description: "Киев, Музична Україна, 129с.",
     available: true
   },
   {
@@ -694,7 +692,7 @@ export const moreBooks: Book[] = [
     author: "И.М. Забелин",
     year: 1988,
     genre: "Біографія",
-    description: "М��сква, Мысль, 332с.",
+    description: "Москва, Мысль, 332с., 5-244-00185-8",
     available: true
   },
   {
@@ -703,7 +701,7 @@ export const moreBooks: Book[] = [
     author: "С.И.Савенко",
     year: 1985,
     genre: "Біографія",
-    description: "Москва, Музыка, 174с., М С12",
+    description: "Москва, Музыка, 174с.",
     available: true
   },
   {
@@ -712,7 +710,7 @@ export const moreBooks: Book[] = [
     author: "Н.Д.Кашкин",
     year: 1954,
     genre: "Музикознавство",
-    description: "Москва, Гос.муз.изд-во, 238с., М К31",
+    description: "Москва, Гос.муз.изд-во, 238с.",
     available: true
   },
   {
@@ -721,7 +719,7 @@ export const moreBooks: Book[] = [
     author: "В.К. Суханцева",
     year: 2000,
     genre: "Філософія",
-    description: "Киев, Факт, 176с., М С91",
+    description: "Киев, Факт, 176с., 966-7274-54-3",
     available: true
   },
   {
@@ -730,7 +728,7 @@ export const moreBooks: Book[] = [
     author: "М. Чулаки",
     year: 1950,
     genre: "Музикознавство",
-    description: "Ленинград, Союз советских куомпозиторов СССР, 213 с., М-Ц Ч-89",
+    description: "Ленинград, Союз советских куомпозиторов СССР, 213 с.",
     available: true
   },
   {
@@ -739,7 +737,7 @@ export const moreBooks: Book[] = [
     author: "Игорь Белза",
     year: 1954,
     genre: "Історія музики",
-    description: "Москва, Гос.муз.изд-во, 335с., М Б97",
+    description: "Москва, Гос.муз.изд-во, 335с.",
     available: true
   },
   {
@@ -748,7 +746,7 @@ export const moreBooks: Book[] = [
     author: "А. Гозенпуд",
     year: 1971,
     genre: "Література і музика",
-    description: "Ленинград, Музыка, 175с., М Г59",
+    description: "Ленинград, Музыка, 175с.",
     available: true
   },
   {
@@ -757,7 +755,7 @@ export const moreBooks: Book[] = [
     author: "Т. Курышева",
     year: 1984,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 201с., М К93",
+    description: "Москва, Советский композитор, 201с.",
     available: true
   },
   {
@@ -793,7 +791,7 @@ export const moreBooks: Book[] = [
     author: "И.В. Нестьев",
     year: 1986,
     genre: "Музикознавство",
-    description: "Москва, Советский композитор, 386 с., М Н56",
+    description: "Москва, Советский композитор, 386 с.",
     available: true
   },
   {
@@ -802,16 +800,16 @@ export const moreBooks: Book[] = [
     author: "Е. Орлова, А. Крюков",
     year: 1984,
     genre: "Біографія",
-    description: "Ленинград, Советский композитор, 272 с., М О-66",
+    description: "Ленинград, Советский композитор, 272 с.",
     available: true
   },
   {
     id: "89",
-    title: "Александр Данилович Каменс��ий. Очерк ��изни и творчества",
+    title: "Александр Данилович Каменский. Очерк жизни и творчества",
     author: "А. Бушен",
     year: 1982,
     genre: "Біографія",
-    description: "Ленинград, Советский композитор, 144 с., М Б94",
+    description: "Ленинград, Советский композитор, 144 с.",
     available: true
   },
   {
@@ -820,7 +818,7 @@ export const moreBooks: Book[] = [
     author: "Г. Скудина",
     year: 1988,
     genre: "Біографія",
-    description: "Москва, Музыка, 32 с., М С46",
+    description: "Москва, Музыка, 32 с., 5-7140-0097-8",
     available: true
   },
   {
@@ -829,7 +827,7 @@ export const moreBooks: Book[] = [
     author: "Б.Т. Удодов",
     year: 1989,
     genre: "Література",
-    description: "Москва, Просвещение, 191 с., С У31",
+    description: "Москва, Просвещение, 191 с., 5-09-001191-5",
     available: true
   },
   {
@@ -838,7 +836,7 @@ export const moreBooks: Book[] = [
     author: "Збірник",
     year: 1991,
     genre: "Література і музика",
-    description: "Москва, Музыка, 319 с.",
+    description: "Москва, Музыка, 319 с., 5-7140-0321-7",
     available: true
   },
   {
@@ -856,7 +854,7 @@ export const moreBooks: Book[] = [
     author: "Збірник",
     year: 1951,
     genre: "Збірка статей",
-    description: "Москва, Изд-во Академии наук СССР, 95 с., М П15",
+    description: "Москва, Изд-во Академии наук СССР, 95 с.",
     available: true
   },
   {
@@ -883,7 +881,7 @@ export const moreBooks: Book[] = [
     author: "Збірник",
     year: 1991,
     genre: "Філософія",
-    description: "Москва, Изд-во политич. лит-ры, 463 с.",
+    description: "Москва, Изд-во политич. лит-ры, 463 с., 5-250-00317-6",
     available: true
   },
   {
@@ -901,7 +899,7 @@ export const moreBooks: Book[] = [
     author: "И. Ремезов",
     year: 1951,
     genre: "Біографія",
-    description: "Москва-Леинград, Гос.муз.изд-во, 66 с., М Р37",
+    description: "Москва-Леинград, Гос.муз.изд-во, 66 с.",
     available: true
   },
   {
@@ -912,10 +910,918 @@ export const moreBooks: Book[] = [
     genre: "Біографія",
     description: "Ленинград, Музыка, 255 с.",
     available: true
+  },
+  {
+    id: "101",
+    title: "Галина Уланова",
+    author: "Б.Львов-Анохин",
+    year: 1984,
+    genre: "Біографія",
+    description: "Москва, Искусство, 350 с.",
+    available: true
+  },
+  {
+    id: "102",
+    title: "Летопись жизни и творчества Ф.И. Шаляпина. Книга 1",
+    author: "Збірник",
+    year: 1988,
+    genre: "Біографія",
+    description: "Ленинград, Музыка, 358 с., 5-7140-0024-2",
+    available: true
+  },
+  {
+    id: "103",
+    title: "Папство. Століття ХХ",
+    author: "Й.Р. Григулевич",
+    year: 1988,
+    genre: "Історія",
+    description: "Київ, Вид-во політ. літ-ри України, 544 с., 5-319-00140-1",
+    available: true
+  },
+  {
+    id: "104",
+    title: "Униатские крестоносцы: вчера и сегодня",
+    author: "К.Е. Дмитрук",
+    year: 1988,
+    genre: "Історія",
+    description: "Москва, Изд-во политич. литры, 381 с., 5-250-00221-8",
+    available: true
+  },
+  {
+    id: "105",
+    title: "История папства",
+    author: "С.Г. Лозинский",
+    year: 1986,
+    genre: "Історія",
+    description: "Москва, Изд-во политич. литр-ры, 382 с.",
+    available: true
+  },
+  {
+    id: "106",
+    title: "Система Станиславского и советский театр",
+    author: "Н. Абалкин",
+    year: 1954,
+    genre: "Театрознавство",
+    description: "Москва, Искусство, 394 с.",
+    available: true
+  },
+  {
+    id: "107",
+    title: "Наследие Станиславского и практика советского театра. Сборник статей",
+    author: "Збірник",
+    year: 1953,
+    genre: "Театрознавство",
+    description: "Москва, Искусство, 227 с.",
+    available: true
+  },
+  {
+    id: "108",
+    title: "Деяния Иуды Фомы (культурно-историческая обусловленность раннесирийской легенды)",
+    author: "Е.Н. Мещерская",
+    year: 1990,
+    genre: "Історія",
+    description: "Москва, Наука, 243 с., 5-02-016627-8",
+    available: true
+  },
+  {
+    id: "109",
+    title: "Танец будущего. Моя жизнь. Встречи с Есениным",
+    author: "А. Дункан, И. Шнайдер",
+    year: 1989,
+    genre: "Біографія",
+    description: "Киев, Мистецтво, 349 с., 5-7715-0195-6",
+    available: true
+  },
+  {
+    id: "110",
+    title: "Апокрифы древних христиан. Исследование, тексты, комментарии",
+    author: "Збірник",
+    year: 1989,
+    genre: "Історія",
+    description: "Москва, Мысль, 336 с., 5-244-00269-4",
+    available: true
   }
 ];
 
-export const allBooks = [...books, ...moreBooks];
+// Continuing with more books
+export const moreBooks: Book[] = [
+  {
+    id: "111",
+    title: "Оповіді євангелістів",
+    author: "Зенон Косідовський",
+    year: 1985,
+    genre: "Історія",
+    description: "Київ, Вид-во політич. літ-ри, 262 с.",
+    available: true
+  },
+  {
+    id: "112",
+    title: "Собрание сочинений в восьми томах. Т.3. Работа актера над собой. Часть II",
+    author: "К.С. Станиславский",
+    year: 1955,
+    genre: "Театрознавство",
+    description: "Работа над собой в творческом процессе воплощения. Дневник ученика. Москва, Искусство, 502 с.",
+    available: true
+  },
+  {
+    id: "113",
+    title: "Собрание сочинений в восьми томах. Т.4. Работа актера над ролью. Материалы к книге",
+    author: "К.С. Станиславский",
+    year: 1957,
+    genre: "Театрознавство",
+    description: "Москва, Искусство, 551 с.",
+    available: true
+  },
+  {
+    id: "114",
+    title: "Собрание сочинений в восьми томах. Т.5. Статьи. Речи. Заметки. Дневники. Воспоминания",
+    author: "К.С. Станиславский",
+    year: 1958,
+    genre: "Театрознавство",
+    description: "Москва, Искусство, 685 с.",
+    available: true
+  },
+  {
+    id: "115",
+    title: "Моя жизнь в искусстве",
+    author: "К.С. Станиславский",
+    year: 1983,
+    genre: "Біографія",
+    description: "Москва, Искусство, 424 с.",
+    available: true
+  },
+  {
+    id: "116",
+    title: "Собрание сочинений в восьми томах. Т.1. Моя жизнь в искусстве",
+    author: "К.С. Станиславский",
+    year: 1954,
+    genre: "Біографія",
+    description: "Москва, Искусство, 515 с.",
+    available: true
+  },
+  {
+    id: "117",
+    title: "Музыкально-критические статьи",
+    author: "П.И. Чайковский",
+    year: 1953,
+    genre: "Музикознавство",
+    description: "Москва, Гос.муз.изд-во, 437 с.",
+    available: true
+  },
+  {
+    id: "118",
+    title: "Караян",
+    author: "Пол Робинсон",
+    year: 1981,
+    genre: "Біографія",
+    description: "Москва, Прогресс, 167 с.",
+    available: true
+  },
+  {
+    id: "119",
+    title: "Музыкально-историческое наследие. В восьми выпусках. Выпуск 3. Музыканты прошлых дней",
+    author: "Ромен Роллан",
+    year: 1988,
+    genre: "Музикознавство",
+    description: "Музыкальное путкшествие в страну прошлого. Москва, Музыка, 448 с.",
+    available: true
+  },
+  {
+    id: "120",
+    title: "Музыкально-историческое наследие. В восьми выпусках. Выпуск 2. Опера в ХVII веке в Италии, Франции, Германии И Англии. Гендель",
+    author: "Ромен Роллан",
+    year: 1987,
+    genre: "Музикознавство",
+    description: "Москва, Музыка, 392 с.",
+    available: true
+  },
+  {
+    id: "121",
+    title: "Режиссура Вл.И. Немировича-Данченко в музыкальном театре",
+    author: "П.А. Марков",
+    year: 1960,
+    genre: "Театрознавство",
+    description: "Москва, ВТО, 410 с.",
+    available: true
+  },
+  {
+    id: "122",
+    title: "Исповедь книгочея, который учил букве, а укреплял дух",
+    author: "Вадим Рабинович",
+    year: 1991,
+    genre: "Література",
+    description: "Москва, Книга, 496 с., 5-212-00128-5",
+    available: true
+  },
+  {
+    id: "123",
+    title: "Музыкальное наследие Чайковского. Из истории его произведений",
+    author: "Збірник",
+    year: 1958,
+    genre: "Музикознавство",
+    description: "Москва, Изд-во Академии наук СССР, 540 с.",
+    available: true
+  },
+  {
+    id: "124",
+    title: "О музыке живой и мертвой",
+    author: "Г. Шнеерсон",
+    year: 1960,
+    genre: "Музикознавство",
+    description: "Москва, Советский композитор, 332 с.",
+    available: true
+  },
+  {
+    id: "125",
+    title: "История зарубежной музыки Х1Х века. Выпуск 2",
+    author: "М. Друскин",
+    year: 1958,
+    genre: "Історія музики",
+    description: "Германия, Австрия, Италия, Франция, Норвегия, Испания во второй половинге Х1Х века. Москва, Гос.муз.изд-во, 331 с.",
+    available: true
+  },
+  {
+    id: "126",
+    title: "История зарубежной музыки Х1Х века. Выпуск первый",
+    author: "В. Конен",
+    year: 1958,
+    genre: "Історія музики",
+    description: "Германия, Австрия, Италия, Франция. С 1789 года до середины Х1Х века. Москва, Гос.муз.изд-во, 391 с.",
+    available: true
+  },
+  {
+    id: "127",
+    title: "Махатма Ганди",
+    author: "Александр Горев",
+    year: 1989,
+    genre: "Біографія",
+    description: "Москва, Международные отношения, 374 с.",
+    available: true
+  },
+  {
+    id: "128",
+    title: "Мифы Древней Греции и музыка",
+    author: "В. Брянцева",
+    year: 1988,
+    genre: "Музикознавство",
+    description: "Москва, Музыка, 47 с.",
+    available: true
+  },
+  {
+    id: "129",
+    title: "История русской музыки. Том 2",
+    author: "Збірник",
+    year: 1958,
+    genre: "Історія музики",
+    description: "Москва, Гос. муз. изд-во, 422 с.",
+    available: true
+  },
+  {
+    id: "130",
+    title: "Советская музыка. История и современность",
+    author: "Л.Д. Никитина",
+    year: 1991,
+    genre: "Історія музики",
+    description: "Москва, Музыка, 278 с., 5-7140-0244-Х",
+    available: true
+  },
+  {
+    id: "131",
+    title: "Книга о советской музыке",
+    author: "Л. Данилевич",
+    year: 1968,
+    genre: "Музикознавство",
+    description: "Москва, Советский композитор, 360 с.",
+    available: true
+  },
+  {
+    id: "132",
+    title: "У потомков Гомера. Очерки о Греции",
+    author: "В.М. Меньшиков",
+    year: 1988,
+    genre: "Подорожі",
+    description: "Москва, Мысль, 268 с., 5-244-00167-1",
+    available: true
+  },
+  {
+    id: "133",
+    title: "Мои современники, какими я их знала. Очерки",
+    author: "Тамара Иванова",
+    year: 1987,
+    genre: "Мемуари",
+    description: "Москва, Советский писатель, 576 с.",
+    available: true
+  },
+  {
+    id: "134",
+    title: "Жорж Бизе",
+    author: "А. Хохловкина",
+    year: 1954,
+    genre: "Біографія",
+    description: "Москва, Гос.муз.изд-во, 459 с.",
+    available: true
+  },
+  {
+    id: "135",
+    title: "Воспоминания. Письма. Материалы в 2-х частях",
+    author: "Борис Лятошинский",
+    year: 1985,
+    genre: "Листування",
+    description: "Киев, Музична Україна, 216 с.",
+    available: true
+  },
+  {
+    id: "136",
+    title: "Воспоминания. Письма. Материалы. в 2-х частях",
+    author: "Борис Лятошинский",
+    year: 1986,
+    genre: "Листування",
+    description: "Киев, Музична Україна, 248 с.",
+    available: true
+  },
+  {
+    id: "137",
+    title: "В.А.Моцарт",
+    author: "Герман Аберт",
+    year: 1985,
+    genre: "Біографія",
+    description: "Москва, Музыка, 568 с.",
+    available: true
+  },
+  {
+    id: "138",
+    title: "Практичний російсько-український словник. Правила правопису та фразеологія",
+    author: "О. Ізюмов",
+    year: 1992,
+    genre: "Словники",
+    description: "Перевидання 1926 року. Київ, Знання, 176 с., 5-7770-0554-3",
+    available: true
+  },
+  {
+    id: "139",
+    title: "Московский университет в воспоминаниях современников (1755-1917)",
+    author: "Збірник",
+    year: 1989,
+    genre: "Мемуари",
+    description: "Москва, Современник, 735 с., 5--270--00686--3",
+    available: true
+  },
+  {
+    id: "140",
+    title: "25 дней в Америке. К 100-летию гастрольной поездки П.И. Чайковского",
+    author: "Леонид Сидельников, Галина Прибегина",
+    year: 1991,
+    genre: "Музикознавство",
+    description: "Москва, Музыка, 240 с., 5-7140-0371-3",
+    available: true
+  },
+  {
+    id: "141",
+    title: "\"Рыцари церкви\". Кто они?",
+    author: "Б.А.Печников",
+    year: 1991,
+    genre: "Історія",
+    description: "Очерки об истории и современной деятельности католических орденов. Москва, Изд-вл полит. лит-ры, 351 с., 5--250--01233--7",
+    available: true
+  },
+  {
+    id: "142",
+    title: "Библейские пропроки и библейские пророчества",
+    author: "М.И. Рижский",
+    year: 1987,
+    genre: "Історія",
+    description: "Москва, Изд-во политт. лит-ры, 366 с.",
+    available: true
+  },
+  {
+    id: "143",
+    title: "Священный вертеп",
+    author: "Лео Таксиль",
+    year: 1985,
+    genre: "Історія",
+    description: "Киев, Изд-во полит.лит-ры Украины, 544 с.",
+    available: true
+  },
+  {
+    id: "144",
+    title: "Черное воинство: (Русский православный монастырь. Легенда и быль)",
+    author: "Г. Прошин",
+    year: 1988,
+    genre: "Історія",
+    description: "Москва, Изд-во полит. лит-ры, 351 с., 5--250--00642--6",
+    available: true
+  },
+  {
+    id: "145",
+    title: "Глобальные проблемы современности и модернизация идеи бога",
+    author: "М.И. Шахнович",
+    year: 1990,
+    genre: "Філософія",
+    description: "Киев, Изд-во полит. лит-ры Украины, 239 с., 5-319-00430-3",
+    available: true
+  },
+  {
+    id: "146",
+    title: "Галерея святых. (или Исследование образа мыслей, поведения, правил и заслуг тех лиц, которые христианство предлагает в качестве образцов)",
+    author: "Поль Гольбах",
+    year: 1987,
+    genre: "Філософія",
+    description: "Киев, Изд-во полит. лит-ры Украины, 335 с.",
+    available: true
+  },
+  {
+    id: "147",
+    title: "Русское православие: вехи истории",
+    author: "Збірник",
+    year: 1989,
+    genre: "Історія",
+    description: "Москва, Изд-во полит. лит-ры, 719 с., 5--250--00246--3",
+    available: true
+  },
+  {
+    id: "148",
+    title: "Введение христианства на Руси",
+    author: "Збірник",
+    year: 1987,
+    genre: "Історія",
+    description: "Москва, Мысль, 304 с.",
+    available: true
+  },
+  {
+    id: "149",
+    title: "Шуберт",
+    author: "В. Конен",
+    year: 1959,
+    genre: "Біографія",
+    description: "Москва, Гос.муз.изд., 304 с.",
+    available: true
+  },
+  {
+    id: "150",
+    title: "Слово о полку Игореве",
+    author: "Збірник",
+    year: 1988,
+    genre: "Література",
+    description: "Москва, Книга, 231 с.",
+    available: true
+  },
+  {
+    id: "151",
+    title: "Слово о полку Ігоревім",
+    author: "Збірник",
+    year: 1989,
+    genre: "Література",
+    description: "Київ, Радянська школа, 310 с., 5-330-00830-1",
+    available: true
+  },
+  {
+    id: "152",
+    title: "Мать",
+    author: "М. Горький",
+    year: 1949,
+    genre: "Література",
+    description: "Ставрополь, Краевое книж.изд-во, 305 с.",
+    available: true
+  },
+  {
+    id: "153",
+    title: "Земля гудит",
+    author: "Олесь Гончар",
+    year: 1950,
+    genre: "Література",
+    description: "Киев, Радянський письменник, 240 с.",
+    available: true
+  },
+  {
+    id: "154",
+    title: "Без языка. Слепой музыкант",
+    author: "В.Г.Короленко",
+    year: 1950,
+    genre: "Література",
+    description: "Смоленск, Смоленское обл.гос.изд-во, 206 с.",
+    available: true
+  },
+  {
+    id: "155",
+    title: "Слово про Ігорів похід",
+    author: "Збірник",
+    year: 1954,
+    genre: "Література",
+    description: "Київ, Молодь, 43 с.",
+    available: true
+  },
+  {
+    id: "156",
+    title: "Избранные произведения",
+    author: "В.Г. Короленко",
+    year: 1940,
+    genre: "Література",
+    description: "Москва-Ленинград, Изд-во Детской лит-ры, 464 с.",
+    available: true
+  },
+  {
+    id: "157",
+    title: "Избранные сочинения и письма",
+    author: "Д.И. Фонвизин",
+    year: 1947,
+    genre: "Література",
+    description: "ОГИЗ, 299 с.",
+    available: true
+  },
+  {
+    id: "158",
+    title: "Рассказы и очерки",
+    author: "Глеб Успенский",
+    year: 1948,
+    genre: "Література",
+    description: "Москва-Ленинград, Гос.изд-во детской литературы, 195 с.",
+    available: true
+  },
+  {
+    id: "159",
+    title: "Хождение по мукам. Трилогия. Сестры, Восемнадцатый год",
+    author: "Алексей Толстой",
+    year: 1948,
+    genre: "Література",
+    description: "Москва, Советский писатель, 615 с.",
+    available: true
+  },
+  {
+    id: "160",
+    title: "Избранные сочинения",
+    author: "А.Н.Радищев",
+    year: 1949,
+    genre: "Література",
+    description: "Москва-Ленинград, Гос.изд-во Художественной литературы, 855 с.",
+    available: true
+  }
+];
+
+// Final batch of books
+export const finalBooks: Book[] = [
+  {
+    id: "161",
+    title: "Избранные произведения",
+    author: "М.Е.Салтыков-Щедрин",
+    year: 1949,
+    genre: "Література",
+    description: "Ленинград, газетно-журнальное и книжное изд-во, 662 с.",
+    available: true
+  },
+  {
+    id: "162",
+    title: "Весняна книга. Лірика",
+    author: "Андрій Малишко",
+    year: 1949,
+    genre: "Поезія",
+    description: "Київ, Радянський письменник, 272 с.",
+    available: true
+  },
+  {
+    id: "163",
+    title: "Избранные произведения",
+    author: "М.Ю.Лермонтов",
+    year: 1946,
+    genre: "Література",
+    description: "Ленинград, ОГИЗ, 332 с.",
+    available: true
+  },
+  {
+    id: "164",
+    title: "Зеленый шум. Избранные произведения",
+    author: "М. Пришвин",
+    year: 1949,
+    genre: "Література",
+    description: "Молодая гвардия, 492 с.",
+    available: true
+  },
+  {
+    id: "165",
+    title: "Избранные сочинения",
+    author: "Н.А.Некрасов",
+    year: 1947,
+    genre: "Література",
+    description: "ОГИЗ, 338 с.",
+    available: true
+  },
+  {
+    id: "166",
+    title: "Мистецтво України. Біографічний довідник",
+    author: "Збірник",
+    year: 1997,
+    genre: "Довідник",
+    description: "Київ, Українська енцоклопедія, 700 с., 588500--42--5",
+    available: true
+  },
+  {
+    id: "167",
+    title: "Отзовется душа. Стихи",
+    author: "Александр Крестинский",
+    year: 1990,
+    genre: "Поезія",
+    description: "Ленинград, Советский писатель, 112 с., 5-265-01266-4",
+    available: true
+  },
+  {
+    id: "168",
+    title: "Чтобі свеча не погасла. Диалог",
+    author: "Лев Гумилев, Александр Панченко",
+    year: 1990,
+    genre: "Література",
+    description: "Ленинград, Советский писатель, 128 с., 5-265-01642-2",
+    available: true
+  },
+  {
+    id: "169",
+    title: "Єдит Пиаф. Песня, собранная в кулак",
+    author: "Наталья Кончаловская",
+    year: 1988,
+    genre: "Біографія",
+    description: "Киев, Музична Україна, 94 с., 5--88510--066--7",
+    available: true
+  },
+  {
+    id: "170",
+    title: "Вениамин Баснер. Монографический очерк",
+    author: "И. Белецкий",
+    year: 1972,
+    genre: "Біографія",
+    description: "Ленинград-Москва, Советский композитор, 112 с.",
+    available: true
+  },
+  {
+    id: "171",
+    title: "Страницы из жизни А.А.Алябьева",
+    author: "Б.Штейнпресс",
+    year: 1956,
+    genre: "Біографія",
+    description: "Москва, Гос. муз. изд-во, 403 с.",
+    available: true
+  },
+  {
+    id: "172",
+    title: "Бородин. Жизнеописание материалы и документы",
+    author: "С.А. Дианин",
+    year: 1955,
+    genre: "Біографія",
+    description: "Москва, Гос.Муз. Изд-во, 378 с.",
+    available: true
+  },
+  {
+    id: "173",
+    title: "Українська радянська музика. Нарис",
+    author: "М. Гордійчук",
+    year: 1957,
+    genre: "Музикознавство",
+    description: "Київ, Держ.вид-во Образотворчого мистецтва і музичної літератури УРСР, 69 с.",
+    available: true
+  },
+  {
+    id: "174",
+    title: "Проблеми української радянської музики. Статті",
+    author: "Збірник",
+    year: 1968,
+    genre: "Музикознавство",
+    description: "Київ, Музична Україна, 180 с.",
+    available: true
+  },
+  {
+    id: "175",
+    title: "Александр Порфирьевич Бородин",
+    author: "В.В. Стасов",
+    year: 1954,
+    genre: "Біографія",
+    description: "Москва, Гос.муз.изд-во, 80 с.",
+    available: true
+  },
+  {
+    id: "176",
+    title: "Воспоминания о Рахманинове",
+    author: "Збірник",
+    year: 1967,
+    genre: "Мемуари",
+    description: "Москва, Музыка, 509 с.",
+    available: true
+  },
+  {
+    id: "177",
+    title: "Воспоминания о Рахманинове",
+    author: "Збірник",
+    year: 1967,
+    genre: "Мемуари",
+    description: "Москва, Музыка, 548 с.",
+    available: true
+  },
+  {
+    id: "178",
+    title: "С.В. Рахманинов. Жизнь и творческая деятельность",
+    author: "А.Д Алексеев",
+    year: 1954,
+    genre: "Біографія",
+    description: "Москва, Гос.Муз.изд-во, 240 с.",
+    available: true
+  },
+  {
+    id: "179",
+    title: "Николай Сидельников",
+    author: "Г. Григорьева",
+    year: 1986,
+    genre: "Біографія",
+    description: "Москва, Советский композитор, 136 с.",
+    available: true
+  },
+  {
+    id: "180",
+    title: "Петр Сокальский. Жизнь и творчество",
+    author: "Т. Карышева",
+    year: 1984,
+    genre: "Біографія",
+    description: "Москва, Советский композитор, 200 с.",
+    available: true
+  },
+  {
+    id: "181",
+    title: "Летопись жизни и творчества А. Н. Скрябина",
+    author: "Збірник",
+    year: 1985,
+    genre: "Біографія",
+    description: "Москва, Музыка, 295 с.",
+    available: true
+  },
+  {
+    id: "182",
+    title: "Дневники 1903-1909. Книга 3",
+    author: "С. Танеев",
+    year: 1985,
+    genre: "Щоденники",
+    description: "Москва, Музыка, 559 с.",
+    available: true
+  },
+  {
+    id: "183",
+    title: "Модест Петрович Мусоргский",
+    author: "Е.Н. Абызова",
+    year: 1985,
+    genre: "Біографія",
+    description: "Москва, Музыка, 158 с.",
+    available: true
+  },
+  {
+    id: "184",
+    title: "Статьи и материалы",
+    author: "Сергей Прокофьев",
+    year: 1965,
+    genre: "Музикознавство",
+    description: "Москва, Музыка, 400 с.",
+    available: true
+  },
+  {
+    id: "185",
+    title: "Эволюция оперного творчества Мусоргского",
+    author: "Р. Ширинян",
+    year: 1973,
+    genre: "Музикознавство",
+    description: "Москва, Музыка, 158 с.",
+    available: true
+  },
+  {
+    id: "186",
+    title: "Мусоргский",
+    author: "Т. Попова",
+    year: 1955,
+    genre: "Біографія",
+    description: "Москва, Гос.муз.изд-во, 272 с.",
+    available: true
+  },
+  {
+    id: "187",
+    title: "Николай Яковлевич Мясковский",
+    author: "З.К.Гулинская",
+    year: 1985,
+    genre: "Біографія",
+    description: "Москва, Музыка, 191 с.",
+    available: true
+  },
+  {
+    id: "188",
+    title: "Александр Порфирьевич Бородин",
+    author: "А.П. Зорина",
+    year: 1987,
+    genre: "Біографія",
+    description: "Москва, Музыка, 190 с.",
+    available: true
+  },
+  {
+    id: "189",
+    title: "Избранные письма",
+    author: "А.Г. Рубинштейн",
+    year: 1954,
+    genre: "Листування",
+    description: "Москва, Гос.муз.изд-во, 102 с.",
+    available: true
+  },
+  {
+    id: "190",
+    title: "Книга о Стравинском",
+    author: "Б. Асафьев",
+    year: 1977,
+    genre: "Музикознавство",
+    description: "Ленинград, Музыка, 279 с.",
+    available: true
+  },
+  {
+    id: "191",
+    title: "Георгій Майборода",
+    author: "О.Зінькевич",
+    year: 1973,
+    genre: "Біографія",
+    description: "Київ, Музична Україна, 51с.",
+    available: true
+  },
+  {
+    id: "192",
+    title: "Лев Ревуцький",
+    author: "Т. Шеффер",
+    year: 1973,
+    genre: "Біографія",
+    description: "Київ, Музична Україна, 43 с.",
+    available: true
+  },
+  {
+    id: "193",
+    title: "Аркадій Філіпенко",
+    author: "М. Михайлов",
+    year: 1973,
+    genre: "Біографія",
+    description: "Київ, Музична Україна, 50 с.",
+    available: true
+  },
+  {
+    id: "194",
+    title: "Александр Порфирьевич Бородин. 1833-1887",
+    author: "М. Ильин, Е. Сегал",
+    year: 1953,
+    genre: "Біографія",
+    description: "Москва, Молодая гвардия, 518 с.",
+    available: true
+  },
+  {
+    id: "195",
+    title: "Наша музыка",
+    author: "В.В. Стасов",
+    year: 1953,
+    genre: "Музикознавство",
+    description: "Москва, Гос.муз.изд-во, 112 с.",
+    available: true
+  },
+  {
+    id: "196",
+    title: "Художественные процессы в русской культуре второй половины Х1Х века",
+    author: "Збірник",
+    year: 1984,
+    genre: "Культурологія",
+    description: "Москва, Наука, 190 с.",
+    available: true
+  },
+  {
+    id: "197",
+    title: "Советские балеты. Краткое содержание",
+    author: "Збірник",
+    year: 1985,
+    genre: "Довідник",
+    description: "Москва, Советский композитор, 320 с.",
+    available: true
+  },
+  {
+    id: "198",
+    title: "Статьи. Воспоминания",
+    author: "И.Ф.Стравинский",
+    year: 1985,
+    genre: "Мемуари",
+    description: "Москва, Советский композитор, 376 с.",
+    available: true
+  },
+  {
+    id: "199",
+    title: "Русское скрипичное искусство. Очерки и материалы",
+    author: "И. Ямпольский",
+    year: 1951,
+    genre: "Музикознавство",
+    description: "Москва-Ленинград, Гос.муз.изд-во, 516 с.",
+    available: true
+  },
+  {
+    id: "200",
+    title: "Драматургия русской оперной классики. Работа русских композиторов-классиков над оперой",
+    author: "Б. Ярустовский",
+    year: 1952,
+    genre: "Музикознавство",
+    description: "Москва, Гос.муз.изд-во, 375 с.",
+    available: true
+  }
+];
+
+export const allBooks = [...books, ...moreBooks, ...finalBooks];
 
 export const filterBooks = (query: string): Book[] => {
   if (!query) return [];
