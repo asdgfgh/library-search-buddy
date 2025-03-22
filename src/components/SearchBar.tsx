@@ -24,6 +24,17 @@ const SearchBar = ({ onSearch, searchQuery, setSearchQuery, isSearching }: Searc
     onSearch('');
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    // Automatically search as typing for better responsiveness
+    if (value.trim().length > 0) {
+      onSearch(value);
+    } else {
+      onSearch('');
+    }
+  };
+
   return (
     <div className={`w-full max-w-xl mx-auto px-6 transition-all duration-500 ${isSearching ? 'scale-90 opacity-90' : 'scale-100 opacity-100'}`}>
       <form 
@@ -42,7 +53,7 @@ const SearchBar = ({ onSearch, searchQuery, setSearchQuery, isSearching }: Searc
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleInputChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="Пошук книг за назвою, автором, жанром..."

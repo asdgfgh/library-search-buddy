@@ -25,7 +25,7 @@ export const books: Book[] = [
     author: "Збірник",
     year: 1988,
     genre: "Збірка",
-    description: "Москва, Книга, 256 с., 5-212-00028-9",
+    description: "Москва, Книга, 256 с., 5-21200028-9",
     available: true
   },
   {
@@ -241,7 +241,7 @@ export const books: Book[] = [
     author: "Н. Шафер",
     year: 1988,
     genre: "Музикознавство",
-    description: "Москва, Советский ��омпозитор, 183с., М Ш-30",
+    description: "Москв��, Советский ��омпозитор, 183с., М Ш-30",
     available: true
   },
   {
@@ -694,7 +694,7 @@ export const moreBooks: Book[] = [
     author: "И.М. Забелин",
     year: 1988,
     genre: "Біографія",
-    description: "Москва, Мысль, 332с.",
+    description: "М��сква, Мысль, 332с.",
     available: true
   },
   {
@@ -807,7 +807,7 @@ export const moreBooks: Book[] = [
   },
   {
     id: "89",
-    title: "Александр Данилович Каменс��ий. Очерк жизни и творчества",
+    title: "Александр Данилович Каменс��ий. Очерк ��изни и творчества",
     author: "А. Бушен",
     year: 1982,
     genre: "Біографія",
@@ -921,11 +921,25 @@ export const filterBooks = (query: string): Book[] => {
   if (!query) return [];
   
   const lowercaseQuery = query.toLowerCase().trim();
-  return allBooks.filter(book => 
-    book.title.toLowerCase().includes(lowercaseQuery) || 
-    book.author.toLowerCase().includes(lowercaseQuery) || 
-    book.genre.toLowerCase().includes(lowercaseQuery) || 
-    book.description.toLowerCase().includes(lowercaseQuery) ||
-    String(book.year).includes(lowercaseQuery)
-  );
+  
+  // For debugging
+  console.log("Search query:", lowercaseQuery);
+  
+  const results = allBooks.filter(book => {
+    const titleMatch = book.title.toLowerCase().includes(lowercaseQuery);
+    const authorMatch = book.author.toLowerCase().includes(lowercaseQuery);
+    const genreMatch = book.genre.toLowerCase().includes(lowercaseQuery);
+    const descriptionMatch = book.description.toLowerCase().includes(lowercaseQuery);
+    const yearMatch = String(book.year).includes(lowercaseQuery);
+    
+    // Log matches for debugging
+    if (titleMatch || authorMatch || genreMatch || descriptionMatch || yearMatch) {
+      console.log("Match found in book:", book.id, book.title);
+    }
+    
+    return titleMatch || authorMatch || genreMatch || descriptionMatch || yearMatch;
+  });
+  
+  console.log("Total results:", results.length);
+  return results;
 };

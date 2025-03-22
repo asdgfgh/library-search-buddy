@@ -11,8 +11,10 @@ const Index = () => {
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = (query: string) => {
+    console.log("Searching for:", query);
     if (query.trim()) {
       const results = filterBooks(query);
+      console.log(`Found ${results.length} results for "${query}"`);
       setSearchResults(results);
       setIsSearching(true);
       setHasSearched(true);
@@ -22,17 +24,6 @@ const Index = () => {
       setHasSearched(false);
     }
   };
-
-  useEffect(() => {
-    // Auto-search after user stops typing
-    const timer = setTimeout(() => {
-      if (searchQuery.trim()) {
-        handleSearch(searchQuery);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-16 md:pt-32 transition-all duration-500 pb-20">
