@@ -2,22 +2,39 @@
 import { useState, useEffect } from 'react';
 import SearchBar from '@/components/SearchBar';
 import SearchResults from '@/components/SearchResults';
-import { filterBooks, Book } from '@/lib/data';
+import { Book } from '@/lib/data';
+import { filterBooksFromSheet } from '@/lib/google-sheets';
+import { useToast } from '@/components/ui/use-toast';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Book[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSearch = (query: string) => {
+  const handleSearch = async (query: string) => {
     console.log("Searching for:", query);
     if (query.trim()) {
-      const results = filterBooks(query);
-      console.log(`Found ${results.length} results for "${query}"`);
-      setSearchResults(results);
-      setIsSearching(true);
-      setHasSearched(true);
+      setIsLoading(true);
+      
+      try {
+        const results = await filterBooksFromSheet(query);
+        console.log(`Found ${results.length} results for "${query}"`);
+        setSearchResults(results);
+        setIsSearching(true);
+        setHasSearched(true);
+      } catch (error) {
+        console.error('Error searching books:', error);
+        toast({
+          title: "Помилка пошуку",
+          description: "Не вдалося знайти книги. Спробуйте пізніше.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       setSearchResults([]);
       setIsSearching(false);
@@ -33,7 +50,7 @@ const Index = () => {
             Бібліотека
           </h1>
           <p className={`text-muted-foreground transition-all duration-500 ${isSearching ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
-            Знайдіть потрібну книгу в нашій колекції
+            Знайдіть потрібну книгу в нашій колекції з Google Sheets
           </p>
         </div>
 
@@ -45,7 +62,13 @@ const Index = () => {
         />
       </div>
 
-      {hasSearched && (
+      {isLoading && (
+        <div className="w-full max-w-5xl mx-auto px-6 text-center py-8">
+          <p className="text-muted-foreground">Завантаження даних...</p>
+        </div>
+      )}
+
+      {hasSearched && !isLoading && (
         <SearchResults 
           results={searchResults} 
           isVisible={isSearching}
@@ -53,7 +76,7 @@ const Index = () => {
         />
       )}
 
-      {!isSearching && (
+      {!isSearching && !isLoading && (
         <div className="mt-16 text-center opacity-70 transition-opacity duration-300 hover:opacity-90">
           <p className="text-sm text-muted-foreground">
             Введіть назву книги, автора або жанр щоб розпочати пошук
