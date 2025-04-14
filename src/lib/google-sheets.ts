@@ -3,8 +3,8 @@ import { Book } from './data';
 
 // Base URL for Google Sheets API v4
 const SHEET_ID = '113toypZnUAarE_JE36BU-oouHtMPnGceXmCyL5b7P4c';
-const API_KEY = 'AIzaSyAwCAlac7wUrpwNV4CmgYomUsgnj_0bKus'; // Updated API key
-const RANGE = 'Sheet1!A2:H'; // Starting from row 2 to skip headers, columns A-H
+const API_KEY = 'AIzaSyAWDvDK8Bp8T9IZqrQ_8CWtAGRV_eldPrk'; // Updated API key
+const RANGE = 'books!A2:H'; // Starting from row 2 to skip headers, columns A-H
 
 export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
   try {
