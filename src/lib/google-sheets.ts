@@ -3,12 +3,8 @@ import { Book } from './data';
 
 // Base URL for Google Sheets API v4
 const SHEET_ID = '113toypZnUAarE_JE36BU-oouHtMPnGceXmCyL5b7P4c';
-const API_KEY = 'AIzaSyCbaEwxAYKcAsO-RooNlLhTzkgMk6c4GAg'; // This is a public API key specifically for this demo
+const API_KEY = 'AIzaSyAwCAlac7wUrpwNV4CmgYomUsgnj_0bKus'; // Updated API key
 const RANGE = 'Sheet1!A2:H'; // Starting from row 2 to skip headers, columns A-H
-
-interface SheetResponse {
-  values: string[][];
-}
 
 export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
   try {
@@ -58,7 +54,7 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
 export async function filterBooksFromSheet(query: string): Promise<Book[]> {
   const books = await fetchBooksFromGoogleSheet();
   
-  if (!query) return [];
+  if (!query) return books; // Return all books if query is empty
   
   const lowercaseQuery = query.toLowerCase().trim();
   

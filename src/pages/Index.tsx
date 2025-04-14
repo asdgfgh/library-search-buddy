@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import SearchResults from '@/components/SearchResults';
 import { Book } from '@/lib/data';
@@ -16,29 +16,23 @@ const Index = () => {
 
   const handleSearch = async (query: string) => {
     console.log("Searching for:", query);
-    if (query.trim()) {
-      setIsLoading(true);
-      
-      try {
-        const results = await filterBooksFromSheet(query);
-        console.log(`Found ${results.length} results for "${query}"`);
-        setSearchResults(results);
-        setIsSearching(true);
-        setHasSearched(true);
-      } catch (error) {
-        console.error('Error searching books:', error);
-        toast({
-          title: "Помилка пошуку",
-          description: "Не вдалося знайти книги. Спробуйте пізніше.",
-          variant: "destructive"
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      setSearchResults([]);
-      setIsSearching(false);
-      setHasSearched(false);
+    setIsLoading(true);
+    
+    try {
+      const results = await filterBooksFromSheet(query);
+      console.log(`Found ${results.length} results for "${query || 'all books'}"`);
+      setSearchResults(results);
+      setIsSearching(true);
+      setHasSearched(true);
+    } catch (error) {
+      console.error('Error searching books:', error);
+      toast({
+        title: "Помилка пошуку",
+        description: "Не вдалося знайти книги. Спробуйте пізніше.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,14 +66,14 @@ const Index = () => {
         <SearchResults 
           results={searchResults} 
           isVisible={isSearching}
-          searchQuery={searchQuery}
+          searchQuery={searchQuery || "всі книги"}
         />
       )}
 
       {!isSearching && !isLoading && (
         <div className="mt-16 text-center opacity-70 transition-opacity duration-300 hover:opacity-90">
           <p className="text-sm text-muted-foreground">
-            Введіть назву книги, автора або жанр щоб розпочати пошук
+            Введіть назву книги, автора або жанр щоб розпочати пошук, або натисніть пошук з пустим полем щоб побачити всі книги
           </p>
         </div>
       )}
