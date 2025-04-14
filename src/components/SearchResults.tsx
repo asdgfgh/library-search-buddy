@@ -40,9 +40,6 @@ const SearchResults = ({ results, isVisible, searchQuery }: SearchResultsProps) 
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
                     <h3 className="font-medium">{book.title}</h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                      {book.available ? 'Доступно' : 'Видано'}
-                    </span>
                   </div>
                   <div className="text-sm text-muted-foreground">
                     {book.author}, {book.year} • {book.genre}

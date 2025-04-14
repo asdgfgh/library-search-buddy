@@ -26,14 +26,20 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
 
     // Convert spreadsheet rows to Book objects
     return data.values.map((row, index) => {
-      // Set default values if data is missing
-      const [title = '', author = '', yearStr = '', genre = '', description = '', availableStr = 'true', id = `sheet-${index}`] = row;
+      // Get all row values, use empty string for missing values
+      const allValues = [...row];
+      
+      // Extract standard fields (first 7 columns)
+      const [title = '', author = '', yearStr = '', genre = '', description = '', availableStr = 'true', id = `sheet-${index}`] = allValues;
       
       // Parse year as number, default to current year if invalid
       const year = parseInt(yearStr, 10) || new Date().getFullYear();
       
-      // Parse available as boolean
+      // Parse available as boolean (not displayed in UI now)
       const available = availableStr.toLowerCase() === 'true';
+
+      // Check for any additional data in the row (8th column and beyond)
+      const extraData = allValues.slice(7).filter(Boolean).join(' ');
 
       return {
         id,
@@ -41,7 +47,7 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
         author,
         year,
         genre,
-        description,
+        description: extraData ? `${description} ${extraData}`.trim() : description,
         available
       };
     });

@@ -35,11 +35,6 @@ const BookCard = ({ book }: BookCardProps) => {
             <span className="text-muted-foreground">Немає зображення</span>
           </div>
         )}
-        <div className="absolute top-2 right-2">
-          <span className={`text-xs px-2 py-1 rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-            {book.available ? 'Доступно' : 'Видано'}
-          </span>
-        </div>
       </div>
       <div className="p-4">
         <div className="text-xs text-primary font-medium mb-1">{book.genre}</div>
