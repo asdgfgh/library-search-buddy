@@ -25,15 +25,11 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
 
   const handleDownloadImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (book.image) {
-      const link = document.createElement('a');
-      link.href = book.image;
-      link.download = `${book.title.replace(/\s+/g, '-')}-cover.jpg`;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    if (book.rawImageUrl) {
+      // Use the raw image URL for download if available
+      window.open(book.rawImageUrl, '_blank');
+    } else if (book.image) {
+      window.open(book.image, '_blank');
     }
   };
 
@@ -61,7 +57,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
               <button
                 onClick={handleDownloadImage}
                 className="p-2 rounded-full backdrop-blur-sm bg-white/70 text-gray-700 hover:bg-white/90 transition-colors"
-                title="Завантажити зображення"
+                title="Відкрити зображення"
               >
                 <Download className="h-4 w-4" />
               </button>

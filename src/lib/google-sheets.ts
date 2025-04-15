@@ -15,7 +15,7 @@ function convertGoogleDriveLink(driveUrl: string): string {
   if (!driveUrl) return '';
   
   // Check if it's already a direct download link
-  if (driveUrl.includes('googleusercontent.com')) {
+  if (driveUrl.includes('googleusercontent.com') || driveUrl.includes('uc?export=view&id=')) {
     return driveUrl;
   }
   
@@ -23,7 +23,7 @@ function convertGoogleDriveLink(driveUrl: string): string {
   let fileId = '';
   
   // Format: https://drive.google.com/file/d/{fileId}/view
-  const fileViewMatch = driveUrl.match(/\/file\/d\/([^\/]+)\/view/);
+  const fileViewMatch = driveUrl.match(/\/file\/d\/([^\/]+)/);
   if (fileViewMatch && fileViewMatch[1]) {
     fileId = fileViewMatch[1];
   }
@@ -87,16 +87,18 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       const status = row[5] || '';
       const available = status !== 'заброньовано';
       
-      // Parse year if present in column C (index 2), or use current year as default
-      const yearStr = row[2] || '';
-      const year = parseInt(yearStr, 10) || new Date().getFullYear();
+      // Parse year if present in column G (index 6), or use current year as default
+      let year = new Date().getFullYear();
+      if (row[6] && !isNaN(parseInt(row[6], 10))) {
+        year = parseInt(row[6], 10);
+      }
 
       return {
         id,
         title,
         author,
         year,
-        genre: row[6] || '',  // Column G (index 6) for genre if available
+        genre: row[7] || '',  // Column H (index 7) for genre if available
         description,
         available,
         image,
@@ -120,10 +122,11 @@ export async function filterBooksFromSheet(query: string): Promise<Book[]> {
   
   return books.filter(book => {
     return (
-      book.id.toLowerCase().includes(lowercaseQuery) ||    // Column A (id/title)
-      book.author.toLowerCase().includes(lowercaseQuery) || // Column B (author)
-      book.title.toLowerCase().includes(lowercaseQuery) ||  // Column C (title)
-      String(book.year).includes(lowercaseQuery)           // Year (if present)
+      (book.title && book.title.toLowerCase().includes(lowercaseQuery)) ||
+      (book.author && book.author.toLowerCase().includes(lowercaseQuery)) ||
+      (book.genre && book.genre.toLowerCase().includes(lowercaseQuery)) ||
+      (book.year && String(book.year).includes(lowercaseQuery)) ||
+      (book.description && book.description.toLowerCase().includes(lowercaseQuery))
     );
   });
 }
