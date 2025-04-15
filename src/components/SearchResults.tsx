@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
@@ -31,6 +32,7 @@ const SearchResults = ({
 
   const handleReserveBook = async (book: Book) => {
     setReservingBookId(book.id);
+    console.log("Reserving book:", book);
     
     try {
       const success = await reserveBook(book);
@@ -97,6 +99,10 @@ const SearchResults = ({
                       src={book.image} 
                       alt={book.title}
                       className="object-cover w-full h-full"
+                      onError={(e) => {
+                        console.log("Image failed to load:", book.image);
+                        e.currentTarget.style.display = 'none';
+                      }}
                     />
                   </div>
                 )}

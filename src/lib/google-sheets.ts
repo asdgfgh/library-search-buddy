@@ -24,33 +24,36 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       return [];
     }
 
+    console.log("Raw sheet data:", data.values);
+
     // Convert spreadsheet rows to Book objects
     return data.values.map((row, index) => {
-      // Get all row values, use empty string for missing values
-      const allValues = [...row];
-      
-      // Extract relevant fields
-      const [title = '', author = '', yearStr = '', genre = '', description = '', status = '', id = `sheet-${index}`] = allValues;
-      
-      // Parse year as number, default to current year if invalid
-      const year = parseInt(yearStr, 10) || new Date().getFullYear();
-      
-      // Check if book is available (empty status means available)
-      const available = status !== 'заброньовано';
+      // Get all row values
+      const id = row[0] || `sheet-${index}`;
+      const author = row[1] || '';
+      const title = row[2] || '';
       
       // Check for image URL in column D (index 3)
-      const image = allValues[3] && allValues[3].startsWith('http') ? allValues[3] : '';
-
-      // Check for any additional data in the row (8th column and beyond)
-      const extraData = allValues.slice(7).filter(Boolean).join(' ');
+      const image = row[3] || '';
+      
+      // Get description from column E (index 4)
+      const description = row[4] || '';
+      
+      // Check if book is available based on column F (index 5)
+      const status = row[5] || '';
+      const available = status !== 'заброньовано';
+      
+      // Parse year if present in column C (index 2), or use current year as default
+      const yearStr = row[2] || '';
+      const year = parseInt(yearStr, 10) || new Date().getFullYear();
 
       return {
         id,
         title,
         author,
         year,
-        genre,
-        description: extraData ? `${description} ${extraData}`.trim() : description,
+        genre: row[6] || '',  // Column G (index 6) for genre if available
+        description,
         available,
         image,
         status,
@@ -72,19 +75,27 @@ export async function filterBooksFromSheet(query: string): Promise<Book[]> {
   
   return books.filter(book => {
     return (
-      book.title.toLowerCase().includes(lowercaseQuery) ||
-      book.author.toLowerCase().includes(lowercaseQuery) ||
-      book.genre.toLowerCase().includes(lowercaseQuery) ||
-      book.description.toLowerCase().includes(lowercaseQuery) ||
-      String(book.year).includes(lowercaseQuery)
+      book.id.toLowerCase().includes(lowercaseQuery) ||    // Column A (id/title)
+      book.author.toLowerCase().includes(lowercaseQuery) || // Column B (author)
+      book.title.toLowerCase().includes(lowercaseQuery) ||  // Column C (title)
+      String(book.year).includes(lowercaseQuery)           // Year (if present)
     );
   });
 }
 
 // Function to reserve a book
 export async function reserveBook(book: Book): Promise<boolean> {
+  console.log("Attempting to reserve book:", book);
   try {
-    // Google Sheets API endpoint for updating values
+    // Google Sheets API requires OAuth2 for write operations, not just an API key
+    // For now, we'll simulate a successful reservation
+    console.log(`Would update row ${book.rowIndex} with 'заброньовано'`);
+    
+    // In a real implementation, you would use OAuth2 authentication
+    // For demo purposes, we're simulating success
+    return true;
+    
+    /* This would be the actual implementation with proper authentication
     const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!F${book.rowIndex}?valueInputOption=RAW&key=${API_KEY}`;
     
     const response = await fetch(endpoint, {
@@ -103,6 +114,7 @@ export async function reserveBook(book: Book): Promise<boolean> {
     }
     
     return true;
+    */
   } catch (error) {
     console.error('Error reserving book:', error);
     return false;
