@@ -41,7 +41,7 @@ function convertGoogleDriveLink(driveUrl: string): string {
   }
   
   if (fileId) {
-    // Return direct download URL
+    // Return direct view URL
     return `https://drive.google.com/uc?export=view&id=${fileId}`;
   }
   

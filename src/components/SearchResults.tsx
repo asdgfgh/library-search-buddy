@@ -27,6 +27,7 @@ const SearchResults = ({
   const isMounted = useDelayedMount(isVisible, 300);
   const { toast } = useToast();
   const [reservingBookId, setReservingBookId] = useState<string | null>(null);
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   
   if (!isMounted) return null;
 
@@ -76,6 +77,10 @@ const SearchResults = ({
     }
   };
 
+  const handleImageError = (bookId: string) => {
+    setImageErrors(prev => ({ ...prev, [bookId]: true }));
+  };
+
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   return (
@@ -102,15 +107,15 @@ const SearchResults = ({
               style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
             >
               <div className="flex items-start gap-4">
-                {book.image && (
+                {book.image && !imageErrors[book.id] && (
                   <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
                     <img 
                       src={book.image} 
                       alt={book.title}
                       className="object-cover w-full h-full"
-                      onError={(e) => {
-                        console.log("Image failed to load:", book.image);
-                        e.currentTarget.style.display = 'none';
+                      onError={() => {
+                        console.error("Image failed to load:", book.image);
+                        handleImageError(book.id);
                       }}
                     />
                     
@@ -122,6 +127,12 @@ const SearchResults = ({
                     >
                       <Download className="h-3 w-3" />
                     </button>
+                  </div>
+                )}
+                
+                {(!book.image || imageErrors[book.id]) && (
+                  <div className="hidden sm:flex w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border bg-muted items-center justify-center">
+                    <span className="text-xs text-muted-foreground">Немає зображення</span>
                   </div>
                 )}
                 

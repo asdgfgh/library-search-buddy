@@ -12,6 +12,7 @@ interface BookCardProps {
 
 const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -33,12 +34,17 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
     }
   };
 
+  // Log image info for debugging
+  if (book.image) {
+    console.log(`Book "${book.title}" image URL:`, book.image);
+  }
+
   return (
     <div 
       className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md"
     >
       <div className="aspect-[3/4] overflow-hidden relative">
-        {book.image && (
+        {book.image && !imageError && (
           <>
             <div className={`absolute inset-0 bg-muted animate-pulse ${imageLoaded ? 'hidden' : 'block'}`}></div>
             <img
@@ -48,7 +54,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
               className={`object-cover w-full h-full transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onError={(e) => {
                 console.error("Image failed to load:", book.image);
-                e.currentTarget.style.display = 'none';
+                setImageError(true);
               }}
             />
             
@@ -64,7 +70,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
             </div>
           </>
         )}
-        {!book.image && (
+        {(!book.image || imageError) && (
           <div className="absolute inset-0 bg-muted flex items-center justify-center">
             <span className="text-muted-foreground">Немає зображення</span>
           </div>
