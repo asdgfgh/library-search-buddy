@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
-import { Heart, Bookmark } from 'lucide-react';
+import { Heart, Bookmark, Download } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { reserveBook } from '@/lib/google-sheets';
 import { Button } from '@/components/ui/button';
@@ -67,6 +67,19 @@ const SearchResults = ({
     onToggleFavorite(bookId);
   };
 
+  const handleDownloadImage = (book: Book) => {
+    if (book.image) {
+      const link = document.createElement('a');
+      link.href = book.image;
+      link.download = `${book.title.replace(/\s+/g, '-')}-cover.jpg`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   return (
@@ -104,6 +117,15 @@ const SearchResults = ({
                         e.currentTarget.style.display = 'none';
                       }}
                     />
+                    
+                    {/* Download button for the image */}
+                    <button
+                      onClick={() => handleDownloadImage(book)}
+                      className="absolute bottom-1 right-1 p-1 rounded-full backdrop-blur-sm bg-white/70 text-gray-700 hover:bg-white/90 transition-colors"
+                      title="Завантажити зображення"
+                    >
+                      <Download className="h-3 w-3" />
+                    </button>
                   </div>
                 )}
                 

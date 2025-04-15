@@ -6,6 +6,49 @@ const SHEET_ID = '113toypZnUAarE_JE36BU-oouHtMPnGceXmCyL5b7P4c';
 const API_KEY = 'AIzaSyAWDvDK8Bp8T9IZqrQ_8CWtAGRV_eldPrk';
 const RANGE = 'Sheet1!A2:H'; // Fetch data from Sheet1 
 
+/**
+ * Converts a Google Drive link to a direct download link
+ * @param driveUrl Google Drive URL (can be view or sharing URL)
+ * @returns Direct download URL for the image
+ */
+function convertGoogleDriveLink(driveUrl: string): string {
+  if (!driveUrl) return '';
+  
+  // Check if it's already a direct download link
+  if (driveUrl.includes('googleusercontent.com')) {
+    return driveUrl;
+  }
+  
+  // Extract file ID from various Google Drive URL formats
+  let fileId = '';
+  
+  // Format: https://drive.google.com/file/d/{fileId}/view
+  const fileViewMatch = driveUrl.match(/\/file\/d\/([^\/]+)\/view/);
+  if (fileViewMatch && fileViewMatch[1]) {
+    fileId = fileViewMatch[1];
+  }
+  
+  // Format: https://drive.google.com/open?id={fileId}
+  const openIdMatch = driveUrl.match(/\?id=([^&]+)/);
+  if (openIdMatch && openIdMatch[1]) {
+    fileId = openIdMatch[1];
+  }
+  
+  // Format: https://docs.google.com/presentation/d/{fileId}/edit
+  const presentationMatch = driveUrl.match(/\/d\/([^\/]+)\//);
+  if (presentationMatch && presentationMatch[1]) {
+    fileId = presentationMatch[1];
+  }
+  
+  if (fileId) {
+    // Return direct download URL
+    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+  }
+  
+  // If no valid file ID found, return the original URL
+  return driveUrl;
+}
+
 export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
   try {
     const response = await fetch(
@@ -33,8 +76,9 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       const author = row[1] || '';
       const title = row[2] || '';
       
-      // Check for image URL in column D (index 3)
-      const image = row[3] || '';
+      // Check for image URL in column D (index 3) and convert Google Drive links
+      const rawImageUrl = row[3] || '';
+      const image = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : '';
       
       // Get description from column E (index 4)
       const description = row[4] || '';
@@ -56,6 +100,7 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
         description,
         available,
         image,
+        rawImageUrl: rawImageUrl, // Store the original URL for download
         status,
         rowIndex: index + 2 // +2 because we start from row 2 in sheet and need to account for 0-indexing
       };
@@ -94,27 +139,6 @@ export async function reserveBook(book: Book): Promise<boolean> {
     // In a real implementation, you would use OAuth2 authentication
     // For demo purposes, we're simulating success
     return true;
-    
-    /* This would be the actual implementation with proper authentication
-    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!F${book.rowIndex}?valueInputOption=RAW&key=${API_KEY}`;
-    
-    const response = await fetch(endpoint, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        values: [['заброньовано']] // Set status to "заброньовано"
-      })
-    });
-    
-    if (!response.ok) {
-      console.error('Failed to reserve book:', await response.text());
-      return false;
-    }
-    
-    return true;
-    */
   } catch (error) {
     console.error('Error reserving book:', error);
     return false;

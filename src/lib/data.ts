@@ -9,6 +9,7 @@ export interface Book {
   available: boolean;
   // New fields
   image?: string;
+  rawImageUrl?: string; // Original URL for download
   status?: string;
   rowIndex?: number;
 }

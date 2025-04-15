@@ -1,7 +1,8 @@
 
 import { Book } from '@/lib/data';
 import { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { Heart, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface BookCardProps {
   book: Book;
@@ -22,6 +23,20 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
     onToggleFavorite(book.id);
   };
 
+  const handleDownloadImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (book.image) {
+      const link = document.createElement('a');
+      link.href = book.image;
+      link.download = `${book.title.replace(/\s+/g, '-')}-cover.jpg`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <div 
       className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md"
@@ -35,7 +50,22 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
               alt={book.title}
               onLoad={() => setImageLoaded(true)}
               className={`object-cover w-full h-full transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onError={(e) => {
+                console.error("Image failed to load:", book.image);
+                e.currentTarget.style.display = 'none';
+              }}
             />
+            
+            {/* Download button */}
+            <div className="absolute bottom-2 right-2 flex gap-2">
+              <button
+                onClick={handleDownloadImage}
+                className="p-2 rounded-full backdrop-blur-sm bg-white/70 text-gray-700 hover:bg-white/90 transition-colors"
+                title="Завантажити зображення"
+              >
+                <Download className="h-4 w-4" />
+              </button>
+            </div>
           </>
         )}
         {!book.image && (
