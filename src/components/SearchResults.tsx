@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
-import { Heart, BookMark } from 'lucide-react';
+import { Heart, Bookmark } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { reserveBook } from '@/lib/google-sheets';
 import { Button } from '@/components/ui/button';
@@ -37,7 +36,6 @@ const SearchResults = ({
       const success = await reserveBook(book);
       
       if (success) {
-        // Update the book status locally
         const updatedBook = { ...book, available: false, status: 'заброньовано' };
         onUpdateResults(updatedBook);
         
@@ -93,7 +91,6 @@ const SearchResults = ({
               style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
             >
               <div className="flex items-start gap-4">
-                {/* Image */}
                 {book.image && (
                   <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
                     <img 
@@ -104,7 +101,6 @@ const SearchResults = ({
                   </div>
                 )}
                 
-                {/* Book details */}
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                     <h3 className="font-medium">{book.title}</h3>
@@ -131,7 +127,6 @@ const SearchResults = ({
                     {book.description}
                   </div>
                   
-                  {/* Reserve button - show only if not already reserved */}
                   {book.available && (
                     <Button 
                       variant="outline"
@@ -140,7 +135,7 @@ const SearchResults = ({
                       disabled={reservingBookId === book.id}
                       className="flex items-center gap-1"
                     >
-                      <BookMark className="h-4 w-4" />
+                      <Bookmark className="h-4 w-4" />
                       {reservingBookId === book.id ? 'Бронювання...' : 'Забронювати'}
                     </Button>
                   )}
