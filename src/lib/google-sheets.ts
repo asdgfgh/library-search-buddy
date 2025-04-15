@@ -4,7 +4,7 @@ import { Book } from './data';
 // Base URL for Google Sheets API v4
 const SHEET_ID = '113toypZnUAarE_JE36BU-oouHtMPnGceXmCyL5b7P4c';
 const API_KEY = 'AIzaSyAWDvDK8Bp8T9IZqrQ_8CWtAGRV_eldPrk';
-const RANGE = 'Sheet1!A2:H'; // Changed from 'books!A2:H' to 'Sheet1!A2:H'
+const RANGE = 'Sheet1!A2:H'; // Fetch data from Sheet1 
 
 export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
   try {
@@ -29,14 +29,17 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       // Get all row values, use empty string for missing values
       const allValues = [...row];
       
-      // Extract standard fields (first 7 columns)
-      const [title = '', author = '', yearStr = '', genre = '', description = '', availableStr = 'true', id = `sheet-${index}`] = allValues;
+      // Extract relevant fields
+      const [title = '', author = '', yearStr = '', genre = '', description = '', status = '', id = `sheet-${index}`] = allValues;
       
       // Parse year as number, default to current year if invalid
       const year = parseInt(yearStr, 10) || new Date().getFullYear();
       
-      // Parse available as boolean (not displayed in UI now)
-      const available = availableStr.toLowerCase() === 'true';
+      // Check if book is available (empty status means available)
+      const available = status !== 'заброньовано';
+      
+      // Check for image URL in column D (index 3)
+      const image = allValues[3] && allValues[3].startsWith('http') ? allValues[3] : '';
 
       // Check for any additional data in the row (8th column and beyond)
       const extraData = allValues.slice(7).filter(Boolean).join(' ');
@@ -48,7 +51,10 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
         year,
         genre,
         description: extraData ? `${description} ${extraData}`.trim() : description,
-        available
+        available,
+        image,
+        status,
+        rowIndex: index + 2 // +2 because we start from row 2 in sheet and need to account for 0-indexing
       };
     });
   } catch (error) {
@@ -73,4 +79,32 @@ export async function filterBooksFromSheet(query: string): Promise<Book[]> {
       String(book.year).includes(lowercaseQuery)
     );
   });
+}
+
+// Function to reserve a book
+export async function reserveBook(book: Book): Promise<boolean> {
+  try {
+    // Google Sheets API endpoint for updating values
+    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!F${book.rowIndex}?valueInputOption=RAW&key=${API_KEY}`;
+    
+    const response = await fetch(endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        values: [['заброньовано']] // Set status to "заброньовано"
+      })
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to reserve book:', await response.text());
+      return false;
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error reserving book:', error);
+    return false;
+  }
 }

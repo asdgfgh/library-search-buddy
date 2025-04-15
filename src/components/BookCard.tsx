@@ -1,17 +1,25 @@
 
 import { Book } from '@/lib/data';
 import { useState } from 'react';
+import { Heart } from 'lucide-react';
 
 interface BookCardProps {
   book: Book;
+  isFavorite: boolean;
+  onToggleFavorite: (bookId: string) => void;
 }
 
-const BookCard = ({ book }: BookCardProps) => {
+const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggleFavorite(book.id);
   };
 
   return (
@@ -35,6 +43,19 @@ const BookCard = ({ book }: BookCardProps) => {
             <span className="text-muted-foreground">Немає зображення</span>
           </div>
         )}
+        
+        {/* Favorite button */}
+        <button
+          onClick={handleToggleFavorite}
+          className={`absolute top-2 right-2 p-2 rounded-full backdrop-blur-sm transition-colors ${
+            isFavorite 
+              ? 'bg-white/70 text-red-500 hover:bg-white/90' 
+              : 'bg-white/50 text-gray-400 hover:bg-white/70'
+          }`}
+          title={isFavorite ? "Видалити з улюблених" : "Додати до улюблених"}
+        >
+          <Heart className={`h-5 w-5 ${isFavorite ? 'fill-red-500' : ''}`} />
+        </button>
       </div>
       <div className="p-4">
         <div className="text-xs text-primary font-medium mb-1">{book.genre}</div>
@@ -50,6 +71,13 @@ const BookCard = ({ book }: BookCardProps) => {
           >
             {isExpanded ? 'Згорнути' : 'Розгорнути'}
           </button>
+        )}
+        
+        {/* Status indicator */}
+        {!book.available && (
+          <div className="mt-3 text-xs px-2 py-1 rounded-md bg-gray-100 inline-block text-muted-foreground">
+            Заброньовано
+          </div>
         )}
       </div>
     </div>

@@ -1,10 +1,15 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from '@/components/SearchBar';
 import SearchResults from '@/components/SearchResults';
+import FavoritesList from '@/components/FavoritesList';
 import { Book } from '@/lib/data';
-import { filterBooksFromSheet } from '@/lib/google-sheets';
+import { filterBooksFromSheet, fetchBooksFromGoogleSheet } from '@/lib/google-sheets';
 import { useToast } from '@/components/ui/use-toast';
+import { Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const FAVORITES_KEY = 'book-app-favorites';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,7 +17,54 @@ const Index = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [allBooks, setAllBooks] = useState<Book[]>([]);
   const { toast } = useToast();
+
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem(FAVORITES_KEY);
+    if (storedFavorites) {
+      try {
+        const parsedFavorites = JSON.parse(storedFavorites);
+        if (Array.isArray(parsedFavorites)) {
+          setFavoriteIds(parsedFavorites);
+        }
+      } catch (error) {
+        console.error('Error parsing favorites from localStorage:', error);
+      }
+    }
+    
+    // Also fetch all books initially so we can populate favorites
+    fetchAllBooks();
+  }, []);
+  
+  // Update favorite books whenever favoriteIds or allBooks change
+  useEffect(() => {
+    if (favoriteIds.length > 0 && allBooks.length > 0) {
+      const favorites = allBooks.filter(book => favoriteIds.includes(book.id));
+      setFavoriteBooks(favorites);
+    } else {
+      setFavoriteBooks([]);
+    }
+  }, [favoriteIds, allBooks]);
+  
+  // Save favorites to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoriteIds));
+  }, [favoriteIds]);
+
+  // Fetch all books (needed for favorites)
+  const fetchAllBooks = async () => {
+    try {
+      const books = await fetchBooksFromGoogleSheet();
+      setAllBooks(books);
+    } catch (error) {
+      console.error('Error fetching all books:', error);
+    }
+  };
 
   const handleSearch = async (query: string) => {
     console.log("Searching for:", query);
@@ -35,6 +87,34 @@ const Index = () => {
       setIsLoading(false);
     }
   };
+  
+  // Toggle favorite status of a book
+  const handleToggleFavorite = (bookId: string) => {
+    setFavoriteIds(prevFavorites => {
+      if (prevFavorites.includes(bookId)) {
+        // Remove from favorites
+        return prevFavorites.filter(id => id !== bookId);
+      } else {
+        // Add to favorites
+        return [...prevFavorites, bookId];
+      }
+    });
+  };
+  
+  // Update a book in search results (used for reservation status)
+  const handleUpdateBook = (updatedBook: Book) => {
+    setSearchResults(prevResults => 
+      prevResults.map(book => 
+        book.id === updatedBook.id ? updatedBook : book
+      )
+    );
+    
+    setAllBooks(prevBooks => 
+      prevBooks.map(book => 
+        book.id === updatedBook.id ? updatedBook : book
+      )
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-16 md:pt-32 transition-all duration-500 pb-20">
@@ -48,12 +128,30 @@ const Index = () => {
           </p>
         </div>
 
-        <SearchBar 
-          onSearch={handleSearch} 
-          searchQuery={searchQuery} 
-          setSearchQuery={setSearchQuery}
-          isSearching={isSearching}
-        />
+        <div className="flex items-center justify-center max-w-xl mx-auto mb-6 gap-4 px-6">
+          <SearchBar 
+            onSearch={handleSearch} 
+            searchQuery={searchQuery} 
+            setSearchQuery={setSearchQuery}
+            isSearching={isSearching}
+          />
+          
+          {/* Favorites button */}
+          <Button
+            variant="outline"
+            className="flex-shrink-0 hover:bg-slate-50"
+            onClick={() => setShowFavorites(true)}
+            title="Показати улюблені книги"
+          >
+            <Heart className="h-5 w-5 mr-1" /> 
+            <span className="hidden sm:inline">Улюблені</span>
+            {favoriteIds.length > 0 && (
+              <span className="ml-1 bg-primary text-primary-foreground px-1.5 text-xs rounded-full">
+                {favoriteIds.length}
+              </span>
+            )}
+          </Button>
+        </div>
       </div>
 
       {isLoading && (
@@ -67,6 +165,9 @@ const Index = () => {
           results={searchResults} 
           isVisible={isSearching}
           searchQuery={searchQuery || "всі книги"}
+          onUpdateResults={handleUpdateBook}
+          favorites={favoriteIds}
+          onToggleFavorite={handleToggleFavorite}
         />
       )}
 
@@ -77,6 +178,14 @@ const Index = () => {
           </p>
         </div>
       )}
+      
+      {/* Favorites overlay */}
+      <FavoritesList 
+        isVisible={showFavorites}
+        favorites={favoriteBooks}
+        onToggleFavorite={handleToggleFavorite}
+        onClose={() => setShowFavorites(false)}
+      />
     </div>
   );
 };

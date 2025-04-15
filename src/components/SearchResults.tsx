@@ -1,17 +1,73 @@
 
+import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
+import { Heart, BookMark } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import { reserveBook } from '@/lib/google-sheets';
+import { Button } from '@/components/ui/button';
 
 interface SearchResultsProps {
   results: Book[];
   isVisible: boolean;
   searchQuery: string;
+  onUpdateResults: (book: Book) => void;
+  favorites: string[];
+  onToggleFavorite: (bookId: string) => void;
 }
 
-const SearchResults = ({ results, isVisible, searchQuery }: SearchResultsProps) => {
+const SearchResults = ({ 
+  results, 
+  isVisible, 
+  searchQuery,
+  onUpdateResults,
+  favorites,
+  onToggleFavorite
+}: SearchResultsProps) => {
   const isMounted = useDelayedMount(isVisible, 300);
+  const { toast } = useToast();
+  const [reservingBookId, setReservingBookId] = useState<string | null>(null);
   
   if (!isMounted) return null;
+
+  const handleReserveBook = async (book: Book) => {
+    setReservingBookId(book.id);
+    
+    try {
+      const success = await reserveBook(book);
+      
+      if (success) {
+        // Update the book status locally
+        const updatedBook = { ...book, available: false, status: 'заброньовано' };
+        onUpdateResults(updatedBook);
+        
+        toast({
+          title: "Книгу заброньовано",
+          description: `Книгу "${book.title}" успішно заброньовано`,
+        });
+      } else {
+        toast({
+          title: "Помилка бронювання",
+          description: "Не вдалося забронювати книгу. Спробуйте пізніше.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Помилка бронювання",
+        description: "Не вдалося забронювати книгу. Спробуйте пізніше.",
+        variant: "destructive"
+      });
+    } finally {
+      setReservingBookId(null);
+    }
+  };
+
+  const handleToggleFavorite = (bookId: string) => {
+    onToggleFavorite(bookId);
+  };
+
+  const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   return (
     <div 
@@ -29,24 +85,71 @@ const SearchResults = ({ results, isVisible, searchQuery }: SearchResultsProps) 
       </div>
       
       {results.length > 0 && (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-4">
           {results.map((book, index) => (
             <div 
               key={book.id} 
-              className="animate-fade-in p-3 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
+              className="animate-fade-in p-4 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
               style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-medium">{book.title}</h3>
+              <div className="flex items-start gap-4">
+                {/* Image */}
+                {book.image && (
+                  <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
+                    <img 
+                      src={book.image} 
+                      alt={book.title}
+                      className="object-cover w-full h-full"
+                    />
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                )}
+                
+                {/* Book details */}
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                    <h3 className="font-medium">{book.title}</h3>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleToggleFavorite(book.id)}
+                        className={`p-1 rounded-full transition-colors ${
+                          isBookInFavorites(book.id) 
+                            ? 'text-red-500 hover:bg-red-50' 
+                            : 'text-gray-400 hover:bg-gray-100'
+                        }`}
+                        title={isBookInFavorites(book.id) ? "Видалити з улюблених" : "Додати до улюблених"}
+                      >
+                        <Heart className={`h-5 w-5 ${isBookInFavorites(book.id) ? 'fill-red-500' : ''}`} />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="text-sm text-muted-foreground mb-2">
                     {book.author}, {book.year} • {book.genre}
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">
+                  
+                  <div className="text-sm text-muted-foreground mb-3">
                     {book.description}
                   </div>
+                  
+                  {/* Reserve button - show only if not already reserved */}
+                  {book.available && (
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleReserveBook(book)}
+                      disabled={reservingBookId === book.id}
+                      className="flex items-center gap-1"
+                    >
+                      <BookMark className="h-4 w-4" />
+                      {reservingBookId === book.id ? 'Бронювання...' : 'Забронювати'}
+                    </Button>
+                  )}
+                  
+                  {!book.available && (
+                    <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">
+                      Заброньовано
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
