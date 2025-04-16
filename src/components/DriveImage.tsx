@@ -33,7 +33,7 @@ const DriveImage = ({ imageUrls, title, className, onLoad, onError }: DriveImage
     
     const tryLoadImage = (index: number) => {
       if (index >= imageUrls.length) {
-        console.error("All image URLs failed to load");
+        console.error("All image URLs failed to load for:", title);
         setLoading(false);
         setAllFailed(true);
         onError?.();
@@ -44,6 +44,7 @@ const DriveImage = ({ imageUrls, title, className, onLoad, onError }: DriveImage
       const img = new Image();
       
       img.onload = () => {
+        console.log(`Successfully loaded image from URL: ${url}`);
         setLoadedUrl(url);
         setLoading(false);
         onLoad?.();
@@ -56,16 +57,34 @@ const DriveImage = ({ imageUrls, title, className, onLoad, onError }: DriveImage
         tryLoadImage(index + 1);
       };
       
+      img.crossOrigin = "anonymous"; // Try to avoid CORS issues
       img.src = url;
     };
     
     tryLoadImage(currentUrlIndex);
-  }, [imageUrls, onError, onLoad]);
+  }, [imageUrls, onError, onLoad, title]);
 
   if (allFailed) {
     return (
       <div className={`flex items-center justify-center bg-muted ${className}`}>
         <span className="text-xs text-muted-foreground">Немає зображення</span>
+      </div>
+    );
+  }
+
+  // Use an iframe for preview URLs
+  if (loadedUrl && loadedUrl.includes('/preview')) {
+    return (
+      <div className="relative w-full h-full">
+        {loading && <Skeleton className={`absolute inset-0 ${className}`} />}
+        <iframe 
+          src={loadedUrl} 
+          className={`w-full h-full ${className}`}
+          frameBorder="0"
+          scrolling="no"
+          title={title}
+          allowFullScreen
+        />
       </div>
     );
   }

@@ -43,16 +43,18 @@ function convertGoogleDriveLink(driveUrl: string): string[] {
   
   // Return an array of possible URLs to try
   return [
-    // Primary format: export=view (most reliable)
-    `https://drive.google.com/uc?export=view&id=${fileId}`,
-    // Thumbnail format (faster but lower quality)
+    // Proxy server for Google Drive content (avoid CORS issues)
+    `https://proxy-server.lovable.dev/google-image/${fileId}`,
+    // Direct thumbnail (often works for public images)
     `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
-    // Direct content format
+    // Alternative Google Drive formats
     `https://lh3.googleusercontent.com/d/${fileId}`,
-    // Alternative format
-    `https://drive.google.com/uc?id=${fileId}`,
-    // Preview format
+    // Public content format
+    `https://drive.usercontent.google.com/download/dm/${fileId}`,
+    // Preview format (browser-rendered)
     `https://drive.google.com/file/d/${fileId}/preview`,
+    // Standard export view (which has CORS issues)
+    `https://drive.google.com/uc?export=view&id=${fileId}`,
   ];
 }
 
