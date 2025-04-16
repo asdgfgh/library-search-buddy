@@ -1,7 +1,6 @@
-
 import { Book } from '@/lib/data';
 import { useState } from 'react';
-import { Heart, Download } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface BookCardProps {
@@ -22,16 +21,6 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     onToggleFavorite(book.id);
-  };
-
-  const handleDownloadImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (book.rawImageUrl) {
-      // Use the raw image URL for download if available
-      window.open(book.rawImageUrl, '_blank');
-    } else if (book.image) {
-      window.open(book.image, '_blank');
-    }
   };
 
   // Log image info for debugging
@@ -57,17 +46,6 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
                 setImageError(true);
               }}
             />
-            
-            {/* Download button */}
-            <div className="absolute bottom-2 right-2 flex gap-2">
-              <button
-                onClick={handleDownloadImage}
-                className="p-2 rounded-full backdrop-blur-sm bg-white/70 text-gray-700 hover:bg-white/90 transition-colors"
-                title="Відкрити зображення"
-              >
-                <Download className="h-4 w-4" />
-              </button>
-            </div>
           </>
         )}
         {(!book.image || imageError) && (
@@ -92,7 +70,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
       <div className="p-4">
         <div className="text-xs text-primary font-medium mb-1">{book.genre}</div>
         <h3 className="font-medium text-lg">{book.title}</h3>
-        <p className="text-sm text-muted-foreground mb-2">{book.author}, {book.year}</p>
+        <p className="text-sm text-muted-foreground mb-2">{book.author}</p>
         <p className={`text-sm text-muted-foreground ${isExpanded ? '' : 'line-clamp-2'}`}>
           {book.description}
         </p>
@@ -105,7 +83,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </button>
         )}
         
-        {/* Status indicator */}
+        {/* Status indicator - keeping this for status display but hiding reservation button */}
         {!book.available && (
           <div className="mt-3 text-xs px-2 py-1 rounded-md bg-gray-100 inline-block text-muted-foreground">
             Заброньовано

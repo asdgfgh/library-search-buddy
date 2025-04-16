@@ -1,11 +1,9 @@
-
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
-import { Heart, Bookmark, Download } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { reserveBook } from '@/lib/google-sheets';
-import { Button } from '@/components/ui/button';
 
 interface SearchResultsProps {
   results: Book[];
@@ -68,15 +66,6 @@ const SearchResults = ({
     onToggleFavorite(bookId);
   };
 
-  const handleOpenImage = (book: Book) => {
-    if (book.rawImageUrl) {
-      // Open the original URL if available
-      window.open(book.rawImageUrl, '_blank');
-    } else if (book.image) {
-      window.open(book.image, '_blank');
-    }
-  };
-
   const handleImageError = (bookId: string) => {
     setImageErrors(prev => ({ ...prev, [bookId]: true }));
   };
@@ -118,15 +107,6 @@ const SearchResults = ({
                         handleImageError(book.id);
                       }}
                     />
-                    
-                    {/* Download button for the image */}
-                    <button
-                      onClick={() => handleOpenImage(book)}
-                      className="absolute bottom-1 right-1 p-1 rounded-full backdrop-blur-sm bg-white/70 text-gray-700 hover:bg-white/90 transition-colors"
-                      title="Відкрити зображення"
-                    >
-                      <Download className="h-3 w-3" />
-                    </button>
                   </div>
                 )}
                 
@@ -155,25 +135,12 @@ const SearchResults = ({
                   </div>
                   
                   <div className="text-sm text-muted-foreground mb-2">
-                    {book.author}, {book.year} • {book.genre}
+                    {book.author} • {book.genre}
                   </div>
                   
                   <div className="text-sm text-muted-foreground mb-3">
                     {book.description}
                   </div>
-                  
-                  {book.available && (
-                    <Button 
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleReserveBook(book)}
-                      disabled={reservingBookId === book.id}
-                      className="flex items-center gap-1"
-                    >
-                      <Bookmark className="h-4 w-4" />
-                      {reservingBookId === book.id ? 'Бронювання...' : 'Забронювати'}
-                    </Button>
-                  )}
                   
                   {!book.available && (
                     <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">
