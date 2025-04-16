@@ -1,3 +1,4 @@
+
 import { Book } from './data';
 
 // Base URL for Google Sheets API v4
@@ -42,15 +43,15 @@ function convertGoogleDriveLink(driveUrl: string): string[] {
   
   // Return an array of possible URLs to try
   return [
-    // Standard Google Drive viewer
+    // Primary format: export=view (most reliable)
     `https://drive.google.com/uc?export=view&id=${fileId}`,
-    // Try thumbnail version
+    // Thumbnail format (faster but lower quality)
     `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
-    // Try direct content
+    // Direct content format
     `https://lh3.googleusercontent.com/d/${fileId}`,
     // Alternative format
     `https://drive.google.com/uc?id=${fileId}`,
-    // Public Drive content format
+    // Preview format
     `https://drive.google.com/file/d/${fileId}/preview`,
   ];
 }
