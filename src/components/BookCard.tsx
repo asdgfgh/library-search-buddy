@@ -1,7 +1,8 @@
+
 import { Book } from '@/lib/data';
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import DriveImage from './DriveImage';
 
 interface BookCardProps {
   book: Book;
@@ -23,32 +24,32 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
     onToggleFavorite(book.id);
   };
 
-  // Log image info for debugging
-  if (book.image) {
-    console.log(`Book "${book.title}" image URL:`, book.image);
-  }
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoaded(false);
+  };
+
+  const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
 
   return (
     <div 
       className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md"
     >
       <div className="aspect-[3/4] overflow-hidden relative">
-        {book.image && !imageError && (
-          <>
-            <div className={`absolute inset-0 bg-muted animate-pulse ${imageLoaded ? 'hidden' : 'block'}`}></div>
-            <img
-              src={book.image}
-              alt={book.title}
-              onLoad={() => setImageLoaded(true)}
-              className={`object-cover w-full h-full transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              onError={(e) => {
-                console.error("Image failed to load:", book.image);
-                setImageError(true);
-              }}
-            />
-          </>
-        )}
-        {(!book.image || imageError) && (
+        {imageUrls.length > 0 && !imageError ? (
+          <DriveImage
+            imageUrls={imageUrls}
+            title={book.title}
+            className="w-full h-full"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
+        ) : (
           <div className="absolute inset-0 bg-muted flex items-center justify-center">
             <span className="text-muted-foreground">Немає зображення</span>
           </div>

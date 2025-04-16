@@ -1,4 +1,3 @@
-
 import { Book } from './data';
 
 // Base URL for Google Sheets API v4
@@ -7,17 +6,12 @@ const API_KEY = 'AIzaSyAWDvDK8Bp8T9IZqrQ_8CWtAGRV_eldPrk';
 const RANGE = 'Sheet1!A2:H'; // Fetch data from Sheet1 
 
 /**
- * Converts a Google Drive link to a direct download link
+ * Converts a Google Drive link to a direct download link or tries multiple formats
  * @param driveUrl Google Drive URL (can be view or sharing URL)
- * @returns Direct download URL for the image
+ * @returns An array of possible image URLs to try
  */
-function convertGoogleDriveLink(driveUrl: string): string {
-  if (!driveUrl) return '';
-  
-  // Check if it's already a direct download link
-  if (driveUrl.includes('googleusercontent.com') || driveUrl.includes('uc?export=view&id=')) {
-    return driveUrl;
-  }
+function convertGoogleDriveLink(driveUrl: string): string[] {
+  if (!driveUrl) return [];
   
   // Extract file ID from various Google Drive URL formats
   let fileId = '';
@@ -40,13 +34,25 @@ function convertGoogleDriveLink(driveUrl: string): string {
     fileId = presentationMatch[1];
   }
   
-  if (fileId) {
-    // Return direct view URL
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+  if (!fileId) {
+    // If no valid file ID found, return the original URL
+    console.log("Could not extract file ID from:", driveUrl);
+    return [driveUrl];
   }
   
-  // If no valid file ID found, return the original URL
-  return driveUrl;
+  // Return an array of possible URLs to try
+  return [
+    // Standard Google Drive viewer
+    `https://drive.google.com/uc?export=view&id=${fileId}`,
+    // Try thumbnail version
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
+    // Try direct content
+    `https://lh3.googleusercontent.com/d/${fileId}`,
+    // Alternative format
+    `https://drive.google.com/uc?id=${fileId}`,
+    // Public Drive content format
+    `https://drive.google.com/file/d/${fileId}/preview`,
+  ];
 }
 
 export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
@@ -76,9 +82,9 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       const author = row[1] || '';
       const title = row[2] || '';
       
-      // Check for image URL in column D (index 3) and convert Google Drive links
+      // Get image URL from column D (index 3) and convert Google Drive links
       const rawImageUrl = row[3] || '';
-      const image = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : '';
+      const imageUrls = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : [];
       
       // Get description from column E (index 4)
       const description = row[4] || '';
@@ -101,8 +107,9 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
         genre: row[7] || '',  // Column H (index 7) for genre if available
         description,
         available,
-        image,
-        rawImageUrl: rawImageUrl, // Store the original URL for download
+        image: imageUrls.length > 0 ? imageUrls[0] : '',
+        imageUrls, // Store all possible image URLs
+        rawImageUrl, // Store the original URL
         status,
         rowIndex: index + 2 // +2 because we start from row 2 in sheet and need to account for 0-indexing
       };

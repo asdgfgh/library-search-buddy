@@ -7,9 +7,11 @@ export interface Book {
   genre: string;
   description: string;
   available: boolean;
-  // New fields
-  image?: string;
-  rawImageUrl?: string; // Original URL for download
+  image: string;
+  imageUrls?: string[]; // Array of possible image URLs to try
+  rawImageUrl?: string;
   status?: string;
   rowIndex?: number;
 }
+
+export type BookSort = 'title' | 'author' | 'year' | 'available';

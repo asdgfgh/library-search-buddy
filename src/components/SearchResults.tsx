@@ -1,9 +1,11 @@
+
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
 import { Heart } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { reserveBook } from '@/lib/google-sheets';
+import DriveImage from './DriveImage';
 
 interface SearchResultsProps {
   results: Book[];
@@ -70,6 +72,14 @@ const SearchResults = ({
     setImageErrors(prev => ({ ...prev, [bookId]: true }));
   };
 
+  const handleImageLoad = (bookId: string) => {
+    setImageErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[bookId];
+      return newErrors;
+    });
+  };
+
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   return (
@@ -89,68 +99,67 @@ const SearchResults = ({
       
       {results.length > 0 && (
         <div className="flex flex-col space-y-4">
-          {results.map((book, index) => (
-            <div 
-              key={book.id} 
-              className="animate-fade-in p-4 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
-              style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
-            >
-              <div className="flex items-start gap-4">
-                {book.image && !imageErrors[book.id] && (
-                  <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
-                    <img 
-                      src={book.image} 
-                      alt={book.title}
-                      className="object-cover w-full h-full"
-                      onError={() => {
-                        console.error("Image failed to load:", book.image);
-                        handleImageError(book.id);
-                      }}
-                    />
-                  </div>
-                )}
-                
-                {(!book.image || imageErrors[book.id]) && (
-                  <div className="hidden sm:flex w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border bg-muted items-center justify-center">
-                    <span className="text-xs text-muted-foreground">Немає зображення</span>
-                  </div>
-                )}
-                
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                    <h3 className="font-medium">{book.title}</h3>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleToggleFavorite(book.id)}
-                        className={`p-1 rounded-full transition-colors ${
-                          isBookInFavorites(book.id) 
-                            ? 'text-red-500 hover:bg-red-50' 
-                            : 'text-gray-400 hover:bg-gray-100'
-                        }`}
-                        title={isBookInFavorites(book.id) ? "Видалити з улюблених" : "Додати до улюблених"}
-                      >
-                        <Heart className={`h-5 w-5 ${isBookInFavorites(book.id) ? 'fill-red-500' : ''}`} />
-                      </button>
+          {results.map((book, index) => {
+            const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
+            
+            return (
+              <div 
+                key={book.id} 
+                className="animate-fade-in p-4 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
+                style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
+              >
+                <div className="flex items-start gap-4">
+                  {imageUrls.length > 0 && !imageErrors[book.id] ? (
+                    <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
+                      <DriveImage
+                        imageUrls={imageUrls}
+                        title={book.title}
+                        onLoad={() => handleImageLoad(book.id)}
+                        onError={() => handleImageError(book.id)}
+                      />
                     </div>
-                  </div>
-                  
-                  <div className="text-sm text-muted-foreground mb-2">
-                    {book.author} • {book.genre}
-                  </div>
-                  
-                  <div className="text-sm text-muted-foreground mb-3">
-                    {book.description}
-                  </div>
-                  
-                  {!book.available && (
-                    <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">
-                      Заброньовано
+                  ) : (
+                    <div className="hidden sm:flex w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border bg-muted items-center justify-center">
+                      <span className="text-xs text-muted-foreground">Немає зображення</span>
                     </div>
                   )}
+                  
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                      <h3 className="font-medium">{book.title}</h3>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleToggleFavorite(book.id)}
+                          className={`p-1 rounded-full transition-colors ${
+                            isBookInFavorites(book.id) 
+                              ? 'text-red-500 hover:bg-red-50' 
+                              : 'text-gray-400 hover:bg-gray-100'
+                          }`}
+                          title={isBookInFavorites(book.id) ? "Видалити з улюблених" : "Додати до улюблених"}
+                        >
+                          <Heart className={`h-5 w-5 ${isBookInFavorites(book.id) ? 'fill-red-500' : ''}`} />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="text-sm text-muted-foreground mb-2">
+                      {book.author} • {book.genre}
+                    </div>
+                    
+                    <div className="text-sm text-muted-foreground mb-3">
+                      {book.description}
+                    </div>
+                    
+                    {!book.available && (
+                      <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">
+                        Заброньовано
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
