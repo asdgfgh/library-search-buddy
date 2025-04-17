@@ -27,7 +27,6 @@ const SearchResults = ({
   const isMounted = useDelayedMount(isVisible, 300);
   const { toast } = useToast();
   const [reservingBookId, setReservingBookId] = useState<string | null>(null);
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   
   if (!isMounted) return null;
 
@@ -68,18 +67,6 @@ const SearchResults = ({
     onToggleFavorite(bookId);
   };
 
-  const handleImageError = (bookId: string) => {
-    setImageErrors(prev => ({ ...prev, [bookId]: true }));
-  };
-
-  const handleImageLoad = (bookId: string) => {
-    setImageErrors(prev => {
-      const newErrors = { ...prev };
-      delete newErrors[bookId];
-      return newErrors;
-    });
-  };
-
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   return (
@@ -109,20 +96,19 @@ const SearchResults = ({
                 style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
               >
                 <div className="flex items-start gap-4">
-                  {imageUrls.length > 0 && !imageErrors[book.id] ? (
-                    <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
+                  <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
+                    {imageUrls.length > 0 ? (
                       <DriveImage
                         imageUrls={imageUrls}
                         title={book.title}
-                        onLoad={() => handleImageLoad(book.id)}
-                        onError={() => handleImageError(book.id)}
+                        className="w-full h-full"
                       />
-                    </div>
-                  ) : (
-                    <div className="hidden sm:flex w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border bg-muted items-center justify-center">
-                      <span className="text-xs text-muted-foreground">Немає зображення</span>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="flex items-center justify-center w-full h-full bg-muted">
+                        <span className="text-xs text-muted-foreground">Немає зображення</span>
+                      </div>
+                    )}
+                  </div>
                   
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
