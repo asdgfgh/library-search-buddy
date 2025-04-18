@@ -96,7 +96,7 @@ const SearchResults = ({
                 style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="hidden sm:block w-[120px] h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
+                  <div className="w-[100px] sm:w-[120px] h-[140px] sm:h-[160px] relative overflow-hidden flex-shrink-0 rounded-md border border-border">
                     {imageUrls.length > 0 ? (
                       <DriveImage
                         imageUrls={imageUrls}
@@ -167,3 +167,4 @@ const SearchResults = ({
 };
 
 export default SearchResults;
+
