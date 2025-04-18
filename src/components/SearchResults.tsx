@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
@@ -112,10 +111,14 @@ const SearchResults = ({
                   
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                      {/* Display class and inventory number at the top */}
                       <div className="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700">
                         {book.classField && <span className="mr-2">{book.classField}</span>}
                         {book.inventoryNumber && <span>№{book.inventoryNumber}</span>}
+                        {book.copiesCount && book.copiesCount !== '0' && (
+                          <span className="ml-2 text-primary">
+                            {book.copiesCount} прим.
+                          </span>
+                        )}
                       </div>
                       
                       <div className="flex items-center gap-2">
@@ -167,4 +170,3 @@ const SearchResults = ({
 };
 
 export default SearchResults;
-

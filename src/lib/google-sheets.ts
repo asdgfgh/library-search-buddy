@@ -88,39 +88,39 @@ async function fetchSheetData(range: string): Promise<Book[]> {
 
     console.log(`Raw sheet data for ${range}:`, data.values);
 
-    // Determine book type based on which sheet it came from
-    const isTextbook = range.includes('Sheet2');
-    
     // Convert spreadsheet rows to Book objects
     return data.values.map((row, index) => {
-      // A: Class, B: Inventory number, C: Author, D: Title, E: Image URL (updated)
+      // A: Class, B: Inventory number, C: Author, D: Title, E: Image URL, F: Copies
       const classField = row[0] || '';
       const inventoryNumber = row[1] || '';
       const author = row[2] || '';
       const title = row[3] || '';
       
-      // Use inventory number or index+sheet for ID to ensure uniqueness
-      const id = inventoryNumber || `${isTextbook ? 'textbook' : 'fiction'}-${index}`;
+      // Use row index and inventory number for ID to ensure uniqueness
+      const id = `${range}-${inventoryNumber}-${index}`;
       
-      // Get image URL from column D (index 3) and convert Google Drive links
-      const rawImageUrl = row[4] || ''; // Updated to use Column E for image URL
+      // Get image URL from column E (index 4) and convert Google Drive links
+      const rawImageUrl = row[4] || '';
       const imageUrls = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : [];
       
-      // Get description from column F (index 5) if available
-      const description = row[5] || '';
+      // Get copies count from column F (index 5)
+      const copiesCount = row[5] || '0';
       
-      // Check if book is available based on column G (index 6)
-      const status = row[6] || '';
+      // Get description from column G (index 6) if available
+      const description = row[6] || '';
+      
+      // Check if book is available based on column H (index 7)
+      const status = row[7] || '';
       const available = status !== 'заброньовано';
       
-      // Parse year if present in column H (index 7), or use current year as default
+      // Parse year if present in column I (index 8), or use current year as default
       let year = new Date().getFullYear();
-      if (row[7] && !isNaN(parseInt(row[7], 10))) {
-        year = parseInt(row[7], 10);
+      if (row[8] && !isNaN(parseInt(row[8], 10))) {
+        year = parseInt(row[8], 10);
       }
 
-      // Determine which sheet this book came from
-      const genre = isTextbook ? 'підручник' : (row[7] || '');
+      const isTextbook = range.includes('Sheet2');
+      const genre = isTextbook ? 'підручник' : (row[8] || '');
       
       return {
         id,
@@ -131,13 +131,14 @@ async function fetchSheetData(range: string): Promise<Book[]> {
         description,
         available,
         image: imageUrls.length > 0 ? imageUrls[0] : '',
-        imageUrls, // Store all possible image URLs
-        rawImageUrl, // Store the original URL
+        imageUrls,
+        rawImageUrl,
         status,
-        rowIndex: index + 2, // +2 because we start from row 2 in sheet and need to account for 0-indexing
-        classField, // Store class field
-        inventoryNumber, // Store inventory number
-        bookType: isTextbook ? 'textbook' : 'fiction' // Add book type
+        rowIndex: index + 2,
+        classField,
+        inventoryNumber,
+        bookType: isTextbook ? 'textbook' : 'fiction',
+        copiesCount
       };
     });
   } catch (error) {
