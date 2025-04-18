@@ -1,4 +1,3 @@
-
 import { Book } from './data';
 
 // Base URL for Google Sheets API v4
@@ -94,7 +93,7 @@ async function fetchSheetData(range: string): Promise<Book[]> {
     
     // Convert spreadsheet rows to Book objects
     return data.values.map((row, index) => {
-      // A: Class, B: Inventory number, C: Author, D: Title, E: Image URL
+      // A: Class, B: Inventory number, C: Author, D: Title, E: Image URL (updated)
       const classField = row[0] || '';
       const inventoryNumber = row[1] || '';
       const author = row[2] || '';
@@ -103,8 +102,8 @@ async function fetchSheetData(range: string): Promise<Book[]> {
       // Use inventory number or index+sheet for ID to ensure uniqueness
       const id = inventoryNumber || `${isTextbook ? 'textbook' : 'fiction'}-${index}`;
       
-      // Get image URL from column E (index 4) and convert Google Drive links
-      const rawImageUrl = row[4] || '';
+      // Get image URL from column D (index 3) and convert Google Drive links
+      const rawImageUrl = row[4] || ''; // Updated to use Column E for image URL
       const imageUrls = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : [];
       
       // Get description from column F (index 5) if available
