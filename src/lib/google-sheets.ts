@@ -172,7 +172,7 @@ export async function fetchBooksFromGoogleSheet(searchMode: SearchMode = 'genera
 }
 
 /**
- * Filters books based on search query and search mode, removing duplicates
+ * Filters books based on search query and search mode
  */
 export async function filterBooksFromSheet(query: string, searchMode: SearchMode = 'general'): Promise<Book[]> {
   const books = await fetchBooksFromGoogleSheet(searchMode);
@@ -181,11 +181,8 @@ export async function filterBooksFromSheet(query: string, searchMode: SearchMode
   
   const lowercaseQuery = query.toLowerCase().trim();
   
-  // Create a Map to track unique books by inventory number/id
-  const uniqueBooks = new Map<string, Book>();
-  
-  books.filter(book => {
-    const matches = (
+  return books.filter(book => {
+    return (
       (book.title && book.title.toLowerCase().includes(lowercaseQuery)) ||
       (book.author && book.author.toLowerCase().includes(lowercaseQuery)) ||
       (book.genre && book.genre.toLowerCase().includes(lowercaseQuery)) ||
@@ -194,17 +191,7 @@ export async function filterBooksFromSheet(query: string, searchMode: SearchMode
       (book.year && String(book.year).includes(lowercaseQuery)) ||
       (book.description && book.description.toLowerCase().includes(lowercaseQuery))
     );
-
-    if (matches) {
-      // Use inventory number or id as unique identifier
-      const uniqueId = book.inventoryNumber || book.id;
-      if (!uniqueBooks.has(uniqueId)) {
-        uniqueBooks.set(uniqueId, book);
-      }
-    }
   });
-  
-  return Array.from(uniqueBooks.values());
 }
 
 // Function to reserve a book
