@@ -4,7 +4,15 @@ import { Book } from './data';
 // Base URL for Google Sheets API v4
 const SHEET_ID = '113toypZnUAarE_JE36BU-oouHtMPnGceXmCyL5b7P4c';
 const API_KEY = 'AIzaSyAWDvDK8Bp8T9IZqrQ_8CWtAGRV_eldPrk';
-const RANGE = 'Sheet1!A2:H'; // Fetch data from Sheet1 
+
+// Sheet ranges for different book types
+const RANGES = {
+  fiction: 'Sheet1!A2:H',    // Fiction books in Sheet1
+  textbooks: 'Sheet2!A2:H',  // Textbooks in Sheet2
+};
+
+// Search mode type definition
+export type SearchMode = 'general' | 'fiction' | 'textbooks';
 
 /**
  * Converts a Google Drive link to a direct download link or tries multiple formats
@@ -58,10 +66,13 @@ function convertGoogleDriveLink(driveUrl: string): string[] {
   ];
 }
 
-export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
+/**
+ * Fetches books from a specific Google Sheet range
+ */
+async function fetchSheetData(range: string): Promise<Book[]> {
   try {
     const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`
     );
 
     if (!response.ok) {
@@ -72,49 +83,62 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
     const data = await response.json() as { values?: string[][] };
     
     if (!data.values || data.values.length === 0) {
-      console.log('No data found in the Google Sheet');
+      console.log(`No data found in the range: ${range}`);
       return [];
     }
 
-    console.log("Raw sheet data:", data.values);
+    console.log(`Raw sheet data for ${range}:`, data.values);
 
+    // Determine book type based on which sheet it came from
+    const isTextbook = range.includes('Sheet2');
+    
     // Convert spreadsheet rows to Book objects
     return data.values.map((row, index) => {
-      // Get all row values
-      const id = row[0] || `sheet-${index}`;
-      const author = row[1] || '';
-      const title = row[2] || '';
+      // A: Class, B: Inventory number, C: Author, D: Title, E: Image URL
+      const classField = row[0] || '';
+      const inventoryNumber = row[1] || '';
+      const author = row[2] || '';
+      const title = row[3] || '';
       
-      // Get image URL from column D (index 3) and convert Google Drive links
-      const rawImageUrl = row[3] || '';
+      // Use inventory number or index+sheet for ID to ensure uniqueness
+      const id = inventoryNumber || `${isTextbook ? 'textbook' : 'fiction'}-${index}`;
+      
+      // Get image URL from column E (index 4) and convert Google Drive links
+      const rawImageUrl = row[4] || '';
       const imageUrls = rawImageUrl ? convertGoogleDriveLink(rawImageUrl) : [];
       
-      // Get description from column E (index 4)
-      const description = row[4] || '';
+      // Get description from column F (index 5) if available
+      const description = row[5] || '';
       
-      // Check if book is available based on column F (index 5)
-      const status = row[5] || '';
+      // Check if book is available based on column G (index 6)
+      const status = row[6] || '';
       const available = status !== 'заброньовано';
       
-      // Parse year if present in column G (index 6), or use current year as default
+      // Parse year if present in column H (index 7), or use current year as default
       let year = new Date().getFullYear();
-      if (row[6] && !isNaN(parseInt(row[6], 10))) {
-        year = parseInt(row[6], 10);
+      if (row[7] && !isNaN(parseInt(row[7], 10))) {
+        year = parseInt(row[7], 10);
       }
 
+      // Determine which sheet this book came from
+      const genre = isTextbook ? 'підручник' : (row[7] || '');
+      
       return {
         id,
         title,
         author,
         year,
-        genre: row[7] || '',  // Column H (index 7) for genre if available
+        genre,
         description,
         available,
         image: imageUrls.length > 0 ? imageUrls[0] : '',
         imageUrls, // Store all possible image URLs
         rawImageUrl, // Store the original URL
         status,
-        rowIndex: index + 2 // +2 because we start from row 2 in sheet and need to account for 0-indexing
+        rowIndex: index + 2, // +2 because we start from row 2 in sheet and need to account for 0-indexing
+        classField, // Store class field
+        inventoryNumber, // Store inventory number
+        bookType: isTextbook ? 'textbook' : 'fiction' // Add book type
       };
     });
   } catch (error) {
@@ -123,8 +147,36 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
   }
 }
 
-export async function filterBooksFromSheet(query: string): Promise<Book[]> {
-  const books = await fetchBooksFromGoogleSheet();
+/**
+ * Fetches books from all sheets or specific sheets based on search mode
+ */
+export async function fetchBooksFromGoogleSheet(searchMode: SearchMode = 'general'): Promise<Book[]> {
+  try {
+    let books: Book[] = [];
+
+    // Fetch books based on search mode
+    if (searchMode === 'general' || searchMode === 'fiction') {
+      const fictionBooks = await fetchSheetData(RANGES.fiction);
+      books = [...books, ...fictionBooks];
+    }
+    
+    if (searchMode === 'general' || searchMode === 'textbooks') {
+      const textbooks = await fetchSheetData(RANGES.textbooks);
+      books = [...books, ...textbooks];
+    }
+
+    return books;
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    return [];
+  }
+}
+
+/**
+ * Filters books based on search query and search mode
+ */
+export async function filterBooksFromSheet(query: string, searchMode: SearchMode = 'general'): Promise<Book[]> {
+  const books = await fetchBooksFromGoogleSheet(searchMode);
   
   if (!query) return books; // Return all books if query is empty
   
@@ -135,6 +187,8 @@ export async function filterBooksFromSheet(query: string): Promise<Book[]> {
       (book.title && book.title.toLowerCase().includes(lowercaseQuery)) ||
       (book.author && book.author.toLowerCase().includes(lowercaseQuery)) ||
       (book.genre && book.genre.toLowerCase().includes(lowercaseQuery)) ||
+      (book.classField && book.classField.toLowerCase().includes(lowercaseQuery)) ||
+      (book.inventoryNumber && book.inventoryNumber.toLowerCase().includes(lowercaseQuery)) ||
       (book.year && String(book.year).includes(lowercaseQuery)) ||
       (book.description && book.description.toLowerCase().includes(lowercaseQuery))
     );

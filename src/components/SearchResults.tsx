@@ -112,7 +112,12 @@ const SearchResults = ({
                   
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                      <h3 className="font-medium">{book.title}</h3>
+                      {/* Display class and inventory number at the top */}
+                      <div className="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700">
+                        {book.classField && <span className="mr-2">{book.classField}</span>}
+                        {book.inventoryNumber && <span>№{book.inventoryNumber}</span>}
+                      </div>
+                      
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleToggleFavorite(book.id)}
@@ -128,13 +133,22 @@ const SearchResults = ({
                       </div>
                     </div>
                     
+                    <h3 className="font-medium mb-1">{book.title}</h3>
+                    
                     <div className="text-sm text-muted-foreground mb-2">
-                      {book.author} • {book.genre}
+                      {book.author} 
+                      {book.bookType && (
+                        <span className="ml-2 text-xs bg-slate-100 px-1.5 py-0.5 rounded-full">
+                          {book.bookType === 'textbook' ? 'Підручник' : 'Художня'}
+                        </span>
+                      )}
                     </div>
                     
-                    <div className="text-sm text-muted-foreground mb-3">
-                      {book.description}
-                    </div>
+                    {book.description && (
+                      <div className="text-sm text-muted-foreground mb-3">
+                        {book.description}
+                      </div>
+                    )}
                     
                     {!book.available && (
                       <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">

@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import SearchBar from '@/components/SearchBar';
 import SearchResults from '@/components/SearchResults';
 import FavoritesList from '@/components/FavoritesList';
+import SearchModeSelector from '@/components/SearchModeSelector';
 import { Book } from '@/lib/data';
-import { filterBooksFromSheet, fetchBooksFromGoogleSheet } from '@/lib/google-sheets';
+import { filterBooksFromSheet, fetchBooksFromGoogleSheet, SearchMode } from '@/lib/google-sheets';
 import { useToast } from '@/components/ui/use-toast';
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ const Index = () => {
   const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
   const [allBooks, setAllBooks] = useState<Book[]>([]);
+  const [searchMode, setSearchMode] = useState<SearchMode>('general');
   const { toast } = useToast();
 
   // Load favorites from localStorage on component mount
@@ -59,7 +61,7 @@ const Index = () => {
   // Fetch all books (needed for favorites)
   const fetchAllBooks = async () => {
     try {
-      const books = await fetchBooksFromGoogleSheet();
+      const books = await fetchBooksFromGoogleSheet('general');
       setAllBooks(books);
     } catch (error) {
       console.error('Error fetching all books:', error);
@@ -67,12 +69,12 @@ const Index = () => {
   };
 
   const handleSearch = async (query: string) => {
-    console.log("Searching for:", query);
+    console.log(`Searching for: "${query}" in mode: ${searchMode}`);
     setIsLoading(true);
     
     try {
-      const results = await filterBooksFromSheet(query);
-      console.log(`Found ${results.length} results for "${query || 'all books'}"`);
+      const results = await filterBooksFromSheet(query, searchMode);
+      console.log(`Found ${results.length} results for "${query || 'all books'}" in ${searchMode} mode`);
       setSearchResults(results);
       setIsSearching(true);
       setHasSearched(true);
@@ -85,6 +87,14 @@ const Index = () => {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+  
+  // Handle search mode change
+  const handleSearchModeChange = (mode: SearchMode) => {
+    setSearchMode(mode);
+    if (searchQuery || hasSearched) {
+      handleSearch(searchQuery);
     }
   };
   
@@ -128,6 +138,12 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Search mode selector */}
+        <SearchModeSelector 
+          selectedMode={searchMode}
+          onSelectMode={handleSearchModeChange}
+        />
+
         <div className="flex items-center justify-center max-w-xl mx-auto mb-6 gap-4 px-6">
           <SearchBar 
             onSearch={handleSearch} 
@@ -164,7 +180,7 @@ const Index = () => {
         <SearchResults 
           results={searchResults} 
           isVisible={isSearching}
-          searchQuery={searchQuery || "всі книги"}
+          searchQuery={searchQuery || `всі ${searchMode === 'fiction' ? 'художні книги' : searchMode === 'textbooks' ? 'підручники' : 'книги'}`}
           onUpdateResults={handleUpdateBook}
           favorites={favoriteIds}
           onToggleFavorite={handleToggleFavorite}
