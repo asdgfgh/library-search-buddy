@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Book, TextBook, GraduationCap } from 'lucide-react';
+import { Book, BookOpen, GraduationCap } from 'lucide-react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { SearchMode } from '@/lib/google-sheets';
 
@@ -35,7 +35,7 @@ const SearchModeSelector: React.FC<SearchModeSelectorProps> = ({
           aria-label="Fiction books search"
           className="flex items-center gap-2 px-4 py-2 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-md"
         >
-          <TextBook className="h-4 w-4" />
+          <BookOpen className="h-4 w-4" />
           <span>Художня</span>
         </ToggleGroupItem>
         
