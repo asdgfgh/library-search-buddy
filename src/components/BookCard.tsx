@@ -35,7 +35,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   };
 
   const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
-  const isAvailable = book.status !== 'заброньовано';
+  const isAvailable = !book.status || book.status.trim() === '';
 
   return (
     <div 
@@ -86,11 +86,13 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
         )}
         
         {/* Status indicator with updated display */}
-        {book.status && (
-          <div className={`mt-3 text-xs px-2 py-1 rounded-md inline-block ${
-            isAvailable ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
-          }`}>
+        {book.status && book.status.trim() !== '' ? (
+          <div className={`mt-3 text-xs px-2 py-1 rounded-md inline-block bg-red-50 text-red-600`}>
             {book.status}
+          </div>
+        ) : (
+          <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
+            Доступна
           </div>
         )}
       </div>
