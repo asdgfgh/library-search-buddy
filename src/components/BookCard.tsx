@@ -35,7 +35,11 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   };
 
   const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
-  const isAvailable = !book.status || book.status.trim() === '';
+  const isAvailable = !book.status || (
+    book.status.trim() !== '' && 
+    !book.status.includes('Заброньовано') && 
+    !book.status.includes('Видано')
+  );
 
   return (
     <div 

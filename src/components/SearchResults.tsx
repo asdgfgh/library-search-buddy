@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
@@ -71,9 +70,9 @@ const SearchResults = ({
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
   // Helper function to check if a book is available
-  // Only consider a book available if status is empty or whitespace
   const isBookAvailable = (status?: string) => {
-    return !status || status.trim() === '';
+    if (!status || status.trim() === '') return true;
+    return !status.includes('Заброньовано') && !status.includes('Видано');
   };
 
   return (
