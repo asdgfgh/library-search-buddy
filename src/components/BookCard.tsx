@@ -35,6 +35,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   };
 
   const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
+  const isAvailable = book.status !== 'заброньовано';
 
   return (
     <div 
@@ -84,10 +85,12 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </button>
         )}
         
-        {/* Status indicator - keeping this for status display but hiding reservation button */}
-        {!book.available && (
-          <div className="mt-3 text-xs px-2 py-1 rounded-md bg-gray-100 inline-block text-muted-foreground">
-            Заброньовано
+        {/* Status indicator with updated display */}
+        {book.status && (
+          <div className={`mt-3 text-xs px-2 py-1 rounded-md inline-block ${
+            isAvailable ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+          }`}>
+            {book.status}
           </div>
         )}
       </div>

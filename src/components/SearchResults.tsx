@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
@@ -69,6 +70,12 @@ const SearchResults = ({
 
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
+  // Helper function to check if a book is available
+  // Only consider a book unavailable if its status is specifically "заброньовано"
+  const isBookAvailable = (status?: string) => {
+    return status !== 'заброньовано';
+  };
+
   return (
     <div 
       className={`w-full max-w-5xl mx-auto px-6 transition-all duration-300 ease-in-out ${
@@ -88,7 +95,7 @@ const SearchResults = ({
         <div className="flex flex-col space-y-4">
           {results.map((book, index) => {
             const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
-            const isAvailable = !book.status;
+            const isAvailable = isBookAvailable(book.status);
             
             return (
               <div 
@@ -171,8 +178,10 @@ const SearchResults = ({
                       </div>
                     )}
                     
-                    {!book.available && book.status && (
-                      <div className="text-xs text-red-600 px-2 py-1 rounded-md bg-red-50 inline-block mt-2">
+                    {book.status && (
+                      <div className={`text-xs px-2 py-1 rounded-md inline-block mt-2 ${
+                        isAvailable ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+                      }`}>
                         {book.status}
                       </div>
                     )}
