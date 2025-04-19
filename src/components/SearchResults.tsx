@@ -5,6 +5,7 @@ import { Heart } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { reserveBook } from '@/lib/google-sheets';
 import DriveImage from './DriveImage';
+import { Badge } from './ui/badge';
 
 interface SearchResultsProps {
   results: Book[];
@@ -87,11 +88,16 @@ const SearchResults = ({
         <div className="flex flex-col space-y-4">
           {results.map((book, index) => {
             const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
+            const isAvailable = !book.status;
             
             return (
               <div 
                 key={book.id} 
-                className="animate-fade-in p-4 border border-border rounded-lg bg-white/50 hover:bg-white/80 transition-all"
+                className={`animate-fade-in p-4 border rounded-lg transition-all ${
+                  isAvailable 
+                    ? 'bg-[#F2FCE2]/50 hover:bg-[#F2FCE2]/80 border-green-200' 
+                    : 'bg-white/50 hover:bg-white/80 border-red-200'
+                }`}
                 style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
               >
                 <div className="flex items-start gap-4">
@@ -111,14 +117,26 @@ const SearchResults = ({
                   
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                      <div className="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700">
-                        {book.classField && <span className="mr-2">{book.classField}</span>}
-                        {book.inventoryNumber && <span>№{book.inventoryNumber}</span>}
-                        {book.copiesCount && book.copiesCount !== '0' && (
-                          <span className="ml-2 text-primary">
-                            {book.copiesCount} прим.
-                          </span>
-                        )}
+                      <div className="flex items-center gap-2">
+                        <div className="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700">
+                          {book.classField && <span className="mr-2">{book.classField}</span>}
+                          {book.inventoryNumber && <span>№{book.inventoryNumber}</span>}
+                          {book.copiesCount && book.copiesCount !== '0' && (
+                            <span className="ml-2 text-primary">
+                              {book.copiesCount} прим.
+                            </span>
+                          )}
+                        </div>
+                        <Badge
+                          variant={isAvailable ? "default" : "destructive"}
+                          className={`text-xs ${
+                            isAvailable 
+                              ? 'bg-green-500 hover:bg-green-600' 
+                              : 'bg-red-500 hover:bg-red-600'
+                          }`}
+                        >
+                          {isAvailable ? 'Доступна' : 'Недоступна'}
+                        </Badge>
                       </div>
                       
                       <div className="flex items-center gap-2">
@@ -153,9 +171,9 @@ const SearchResults = ({
                       </div>
                     )}
                     
-                    {!book.available && (
-                      <div className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-gray-100 inline-block">
-                        Заброньовано
+                    {!book.available && book.status && (
+                      <div className="text-xs text-red-600 px-2 py-1 rounded-md bg-red-50 inline-block mt-2">
+                        {book.status}
                       </div>
                     )}
                   </div>
