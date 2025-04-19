@@ -69,10 +69,10 @@ const SearchResults = ({
 
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
-  // Helper function to check if a book is available
   const isBookAvailable = (status?: string) => {
     if (!status || status.trim() === '') return true;
-    return !status.includes('Заброньовано') && !status.includes('Видано');
+    const statusLowerCase = status.trim().toLowerCase();
+    return !statusLowerCase.includes('заброньовано') && !statusLowerCase.includes('видано');
   };
 
   return (
@@ -178,7 +178,9 @@ const SearchResults = ({
                     )}
                     
                     {book.status && book.status.trim() !== '' ? (
-                      <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-red-50 text-red-600">
+                      <div className={`text-xs px-2 py-1 rounded-md inline-block mt-2 ${
+                        isAvailable ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+                      }`}>
                         {book.status}
                       </div>
                     ) : (
