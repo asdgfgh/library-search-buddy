@@ -75,6 +75,31 @@ const SearchResults = ({
     return !statusLowerCase.includes('заброньовано') && !statusLowerCase.includes('видано');
   };
 
+  const renderStatusLabel = (status?: string) => {
+    if (!status || status.trim() === '') {
+      return (
+        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-green-50 text-green-700">
+          Доступна
+        </div>
+      );
+    } else if (
+      status.trim().toLowerCase().includes('заброньовано') || 
+      status.trim().toLowerCase().includes('видано')
+    ) {
+      return (
+        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-red-50 text-red-600">
+          {status}
+        </div>
+      );
+    } else {
+      return (
+        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-green-50 text-green-700">
+          {status}
+        </div>
+      );
+    }
+  };
+
   return (
     <div 
       className={`w-full max-w-5xl mx-auto px-6 transition-all duration-300 ease-in-out ${
@@ -177,17 +202,7 @@ const SearchResults = ({
                       </div>
                     )}
                     
-                    {book.status && book.status.trim() !== '' ? (
-                      <div className={`text-xs px-2 py-1 rounded-md inline-block mt-2 ${
-                        isAvailable ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
-                      }`}>
-                        {book.status}
-                      </div>
-                    ) : (
-                      <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-green-50 text-green-700">
-                        Доступна
-                      </div>
-                    )}
+                    {renderStatusLabel(book.status)}
                   </div>
                 </div>
               </div>

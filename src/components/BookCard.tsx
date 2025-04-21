@@ -1,4 +1,3 @@
-
 import { Book } from '@/lib/data';
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
@@ -40,6 +39,31 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
     book.status.trim().toLowerCase().indexOf('видано') === -1
   );
 
+  const renderStatusLabel = () => {
+    if (!book.status || book.status.trim() === '') {
+      return (
+        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
+          Доступна
+        </div>
+      );
+    } else if (
+      book.status.trim().toLowerCase().includes('заброньовано') || 
+      book.status.trim().toLowerCase().includes('видано')
+    ) {
+      return (
+        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-red-50 text-red-600">
+          {book.status}
+        </div>
+      );
+    } else {
+      return (
+        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
+          {book.status}
+        </div>
+      );
+    }
+  };
+
   return (
     <div 
       className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md"
@@ -59,7 +83,6 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </div>
         )}
         
-        {/* Favorite button */}
         <button
           onClick={handleToggleFavorite}
           className={`absolute top-2 right-2 p-2 rounded-full backdrop-blur-sm transition-colors ${
@@ -88,20 +111,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </button>
         )}
         
-        {/* Status indicator with updated display */}
-        {book.status && book.status.trim() !== '' ? (
-          <div className={`mt-3 text-xs px-2 py-1 rounded-md inline-block ${
-            isAvailable 
-              ? 'bg-green-50 text-green-700' 
-              : 'bg-red-50 text-red-600'
-          }`}>
-            {book.status}
-          </div>
-        ) : (
-          <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
-            Доступна
-          </div>
-        )}
+        {renderStatusLabel()}
       </div>
     </div>
   );
