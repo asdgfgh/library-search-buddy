@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import SearchBar from '@/components/SearchBar';
 import SearchResults from '@/components/SearchResults';
@@ -25,7 +24,6 @@ const Index = () => {
   const [searchMode, setSearchMode] = useState<SearchMode>('general');
   const { toast } = useToast();
 
-  // Load favorites from localStorage on component mount
   useEffect(() => {
     const storedFavorites = localStorage.getItem(FAVORITES_KEY);
     if (storedFavorites) {
@@ -39,11 +37,9 @@ const Index = () => {
       }
     }
     
-    // Also fetch all books initially so we can populate favorites
     fetchAllBooks();
   }, []);
   
-  // Update favorite books whenever favoriteIds or allBooks change
   useEffect(() => {
     if (favoriteIds.length > 0 && allBooks.length > 0) {
       const favorites = allBooks.filter(book => favoriteIds.includes(book.id));
@@ -53,12 +49,10 @@ const Index = () => {
     }
   }, [favoriteIds, allBooks]);
   
-  // Save favorites to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoriteIds));
   }, [favoriteIds]);
 
-  // Fetch all books (needed for favorites)
   const fetchAllBooks = async () => {
     try {
       const books = await fetchBooksFromGoogleSheet('general');
@@ -90,7 +84,6 @@ const Index = () => {
     }
   };
   
-  // Handle search mode change
   const handleSearchModeChange = (mode: SearchMode) => {
     setSearchMode(mode);
     if (searchQuery || hasSearched) {
@@ -98,20 +91,16 @@ const Index = () => {
     }
   };
   
-  // Toggle favorite status of a book
   const handleToggleFavorite = (bookId: string) => {
     setFavoriteIds(prevFavorites => {
       if (prevFavorites.includes(bookId)) {
-        // Remove from favorites
         return prevFavorites.filter(id => id !== bookId);
       } else {
-        // Add to favorites
         return [...prevFavorites, bookId];
       }
     });
   };
   
-  // Update a book in search results (used for reservation status)
   const handleUpdateBook = (updatedBook: Book) => {
     setSearchResults(prevResults => 
       prevResults.map(book => 
@@ -138,7 +127,6 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Search mode selector */}
         <SearchModeSelector 
           selectedMode={searchMode}
           onSelectMode={handleSearchModeChange}
@@ -152,7 +140,6 @@ const Index = () => {
             isSearching={isSearching}
           />
           
-          {/* Favorites button */}
           <Button
             variant="outline"
             className="flex-shrink-0 hover:bg-slate-50"
@@ -195,7 +182,6 @@ const Index = () => {
         </div>
       )}
       
-      {/* Favorites overlay */}
       <FavoritesList 
         isVisible={showFavorites}
         favorites={favoriteBooks}

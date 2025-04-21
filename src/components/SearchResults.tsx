@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useDelayedMount } from '@/lib/animations';
@@ -16,16 +17,7 @@ interface SearchResultsProps {
   onToggleFavorite: (bookId: string) => void;
 }
 
-const renderStatusLabel = (status?: string) => {
-  const trimmed = status?.trim().toLowerCase() || '';
-  if (trimmed.includes('заброньовано') || trimmed.includes('видано')) {
-    return <span className="bg-red-50 text-red-600 px-2 py-1 rounded-md">{status}</span>;
-  } else if (!trimmed) {
-    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">Доступна</span>;
-  } else {
-    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">{status}</span>;
-  }
-};
+// Removed the renderStatusLabel helper function
 
 const SearchResults = ({ 
   results, 
@@ -80,11 +72,7 @@ const SearchResults = ({
 
   const isBookInFavorites = (bookId: string) => favorites.includes(bookId);
 
-  const isBookAvailable = (status?: string) => {
-    if (!status || status.trim() === '') return true;
-    const statusLowerCase = status.trim().toLowerCase();
-    return !statusLowerCase.includes('заброньовано') && !statusLowerCase.includes('видано');
-  };
+  // Removed the isBookAvailable helper function
 
   return (
     <div 
@@ -105,16 +93,12 @@ const SearchResults = ({
         <div className="flex flex-col space-y-4">
           {results.map((book, index) => {
             const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
-            const isAvailable = isBookAvailable(book.status);
+            // Removed isAvailable calculation
             
             return (
               <div 
                 key={book.id} 
-                className={`animate-fade-in p-4 border rounded-lg transition-all ${
-                  isAvailable 
-                    ? 'bg-[#F2FCE2]/50 hover:bg-[#F2FCE2]/80 border-green-200' 
-                    : 'bg-white/50 hover:bg-white/80 border-red-200'
-                }`}
+                className="animate-fade-in p-4 border rounded-lg transition-all bg-white/50 hover:bg-white/80 border-gray-200"
                 style={{ animationDelay: `${Math.min(index * 0.05, 1)}s` }}
               >
                 <div className="flex items-start gap-4">
@@ -144,16 +128,8 @@ const SearchResults = ({
                             </span>
                           )}
                         </div>
-                        <Badge
-                          variant={isAvailable ? "default" : "destructive"}
-                          className={`text-xs ${
-                            isAvailable 
-                              ? 'bg-green-500 hover:bg-green-600' 
-                              : 'bg-red-500 hover:bg-red-600'
-                          }`}
-                        >
-                          {isAvailable ? 'Доступна' : 'Недоступна'}
-                        </Badge>
+                        
+                        {/* Removed Badge component showing availability status */}
                       </div>
                       
                       <div className="flex items-center gap-2">
@@ -188,9 +164,7 @@ const SearchResults = ({
                       </div>
                     )}
                     
-                    <div className="mt-2 text-xs inline-block">
-                      {renderStatusLabel(book.status)}
-                    </div>
+                    {/* Removed the status label rendering code here */}
                   </div>
                 </div>
               </div>
