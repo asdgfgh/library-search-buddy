@@ -1,3 +1,4 @@
+
 import { Book } from '@/lib/data';
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
@@ -8,6 +9,17 @@ interface BookCardProps {
   isFavorite: boolean;
   onToggleFavorite: (bookId: string) => void;
 }
+
+const renderStatusLabel = (status?: string) => {
+  const trimmed = status?.trim().toLowerCase() || '';
+  if (trimmed.includes('заброньовано') || trimmed.includes('видано')) {
+    return <span className="bg-red-50 text-red-600 px-2 py-1 rounded-md">{status}</span>;
+  } else if (!trimmed) {
+    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">Доступна</span>;
+  } else {
+    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">{status}</span>;
+  }
+};
 
 const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -34,40 +46,9 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   };
 
   const imageUrls = book.imageUrls || (book.image ? [book.image] : []);
-  const isAvailable = !book.status || (
-    book.status.trim().toLowerCase().indexOf('заброньовано') === -1 && 
-    book.status.trim().toLowerCase().indexOf('видано') === -1
-  );
-
-  const renderStatusLabel = () => {
-    if (!book.status || book.status.trim() === '') {
-      return (
-        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
-          Доступна
-        </div>
-      );
-    } else if (
-      book.status.trim().toLowerCase().includes('заброньовано') || 
-      book.status.trim().toLowerCase().includes('видано')
-    ) {
-      return (
-        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-red-50 text-red-600">
-          {book.status}
-        </div>
-      );
-    } else {
-      return (
-        <div className="mt-3 text-xs px-2 py-1 rounded-md inline-block bg-green-50 text-green-700">
-          {book.status}
-        </div>
-      );
-    }
-  };
 
   return (
-    <div 
-      className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md"
-    >
+    <div className="relative overflow-hidden rounded-xl border border-border bg-white/50 transition-all duration-300 hover:shadow-md">
       <div className="aspect-[3/4] overflow-hidden relative">
         {imageUrls.length > 0 && !imageError ? (
           <DriveImage
@@ -82,12 +63,12 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
             <span className="text-muted-foreground">Немає зображення</span>
           </div>
         )}
-        
+
         <button
           onClick={handleToggleFavorite}
           className={`absolute top-2 right-2 p-2 rounded-full backdrop-blur-sm transition-colors ${
-            isFavorite 
-              ? 'bg-white/70 text-red-500 hover:bg-white/90' 
+            isFavorite
+              ? 'bg-white/70 text-red-500 hover:bg-white/90'
               : 'bg-white/50 text-gray-400 hover:bg-white/70'
           }`}
           title={isFavorite ? "Видалити з улюблених" : "Додати до улюблених"}
@@ -103,18 +84,21 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           {book.description}
         </p>
         {book.description && book.description.length > 100 && (
-          <button 
-            onClick={toggleExpand} 
+          <button
+            onClick={toggleExpand}
             className="text-xs text-primary mt-2 hover:underline"
           >
             {isExpanded ? 'Згорнути' : 'Розгорнути'}
           </button>
         )}
-        
-        {renderStatusLabel()}
+
+        <div className="mt-3 text-xs inline-block">
+          {renderStatusLabel(book.status)}
+        </div>
       </div>
     </div>
   );
 };
 
 export default BookCard;
+

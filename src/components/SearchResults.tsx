@@ -16,6 +16,17 @@ interface SearchResultsProps {
   onToggleFavorite: (bookId: string) => void;
 }
 
+const renderStatusLabel = (status?: string) => {
+  const trimmed = status?.trim().toLowerCase() || '';
+  if (trimmed.includes('заброньовано') || trimmed.includes('видано')) {
+    return <span className="bg-red-50 text-red-600 px-2 py-1 rounded-md">{status}</span>;
+  } else if (!trimmed) {
+    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">Доступна</span>;
+  } else {
+    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">{status}</span>;
+  }
+};
+
 const SearchResults = ({ 
   results, 
   isVisible, 
@@ -73,31 +84,6 @@ const SearchResults = ({
     if (!status || status.trim() === '') return true;
     const statusLowerCase = status.trim().toLowerCase();
     return !statusLowerCase.includes('заброньовано') && !statusLowerCase.includes('видано');
-  };
-
-  const renderStatusLabel = (status?: string) => {
-    if (!status || status.trim() === '') {
-      return (
-        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-green-50 text-green-700">
-          Доступна
-        </div>
-      );
-    } else if (
-      status.trim().toLowerCase().includes('заброньовано') || 
-      status.trim().toLowerCase().includes('видано')
-    ) {
-      return (
-        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-red-50 text-red-600">
-          {status}
-        </div>
-      );
-    } else {
-      return (
-        <div className="text-xs px-2 py-1 rounded-md inline-block mt-2 bg-green-50 text-green-700">
-          {status}
-        </div>
-      );
-    }
   };
 
   return (
@@ -202,7 +188,9 @@ const SearchResults = ({
                       </div>
                     )}
                     
-                    {renderStatusLabel(book.status)}
+                    <div className="mt-2 text-xs inline-block">
+                      {renderStatusLabel(book.status)}
+                    </div>
                   </div>
                 </div>
               </div>
