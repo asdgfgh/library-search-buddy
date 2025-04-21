@@ -1,4 +1,3 @@
-
 import { Book } from '@/lib/data';
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
@@ -10,7 +9,47 @@ interface BookCardProps {
   onToggleFavorite: (bookId: string) => void;
 }
 
-// Removed the renderStatusLabel helper function
+// Helper to highlight status keywords as badge pills in status field
+function renderStatusWithBadges(status?: string) {
+  if (!status) return null;
+
+  // Define mapping for keywords and their styles
+  const badgeMap: Record<string, { bg: string; text: string }> = {
+    "Доступна": { bg: "bg-green-100", text: "text-green-800" },
+    "Видано": { bg: "bg-red-100", text: "text-red-800" },
+    "Заброньовано": { bg: "bg-orange-100", text: "text-orange-800" },
+  };
+
+  // Regex to match only the keywords, not substrings inside other words
+  const regex = /(Доступна|Видано|Заброньовано)/g;
+
+  // Split the text by keywords and interleave
+  const parts = status.split(regex);
+
+  return (
+    <div className="mt-2" aria-label="Статус книги">
+      {parts.map((part, i) => {
+        if (badgeMap.hasOwnProperty(part)) {
+          const { bg, text } = badgeMap[part];
+          return (
+            <span
+              key={`${part}-${i}`}
+              className={`${bg} ${text} rounded-full px-2 py-1 text-xs inline-block font-semibold ml-0 mr-2 mb-1`}
+              aria-label={part}
+              role="status"
+            >
+              {part}
+            </span>
+          );
+        }
+        // Render plain text for any other parts
+        return part ? (
+          <span key={i} className="text-muted-foreground">{part}</span>
+        ) : null;
+      })}
+    </div>
+  );
+}
 
 const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -83,7 +122,7 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </button>
         )}
 
-        {/* Removed the availability/status label JSX here */}
+        {book.status && renderStatusWithBadges(book.status)}
       </div>
     </div>
   );
