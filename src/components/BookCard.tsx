@@ -10,16 +10,7 @@ interface BookCardProps {
   onToggleFavorite: (bookId: string) => void;
 }
 
-const renderStatusLabel = (status?: string) => {
-  const trimmed = status?.trim().toLowerCase() || '';
-  if (trimmed.includes('заброньовано') || trimmed.includes('видано')) {
-    return <span className="bg-red-50 text-red-600 px-2 py-1 rounded-md">{status}</span>;
-  } else if (!trimmed) {
-    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">Доступна</span>;
-  } else {
-    return <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md">{status}</span>;
-  }
-};
+// Removed the renderStatusLabel helper function
 
 const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -92,13 +83,10 @@ const BookCard = ({ book, isFavorite, onToggleFavorite }: BookCardProps) => {
           </button>
         )}
 
-        <div className="mt-3 text-xs inline-block">
-          {renderStatusLabel(book.status)}
-        </div>
+        {/* Removed the availability/status label JSX here */}
       </div>
     </div>
   );
 };
 
 export default BookCard;
-
